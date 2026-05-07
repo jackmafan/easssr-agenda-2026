@@ -75,14 +75,25 @@ const app = {
             slot.sessions.forEach(session => {
                 const card = document.createElement('div');
                 card.className = 'session-card';
-                card.onclick = () => this.showSession(slot.time, session);
+                
+                // Special handling for multi-line titles (Keynotes, etc.)
+                const titleParts = session.title.split('\n').filter(p => p.trim() !== '');
+                const displayTitle = titleParts[0];
+                const subInfo = titleParts.slice(1).map(p => `<div class="session-subinfo">${p}</div>`).join('');
+
+                if (session.papers.length > 0) {
+                    card.onclick = () => this.showSession(slot.time, session);
+                } else {
+                    card.style.cursor = 'default';
+                }
                 
                 const room = session.room ? `<div class="room-tag">${session.room}</div>` : '';
                 const paperCount = session.papers.length > 0 ? `<div class="paper-count">${session.papers.length} Papers</div>` : '';
                 
                 card.innerHTML = `
                     ${room}
-                    <div class="session-title">${session.title}</div>
+                    <div class="session-title">${displayTitle}</div>
+                    <div class="session-subinfo-container">${subInfo}</div>
                     ${paperCount}
                 `;
                 gridEl.appendChild(card);
