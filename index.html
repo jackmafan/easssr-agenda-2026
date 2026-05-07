@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EASSSR 2026 Conference Agenda</title>
+    <meta name="description" content="Official agenda and schedule for the EASSSR 2026 Conference. Explore sessions, speakers, and abstracts.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="glass">
+        <div class="container">
+            <h1 id="main-title">EASSSR 2026</h1>
+            <p class="subtitle">Conference Agenda & Schedule</p>
+            <div class="search-bar glass-light">
+                <input type="text" id="global-search" placeholder="Search speakers, titles, or keywords...">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </div>
+        </div>
+    </header>
+
+    <nav id="day-tabs" class="container">
+        <!-- Tabs will be generated here -->
+    </nav>
+
+    <main id="app-content" class="container">
+        <div id="agenda-grid" class="view">
+            <!-- Agenda content will be injected here -->
+        </div>
+        <div id="session-detail" class="view hidden">
+            <button class="back-btn" onclick="app.showAgenda()">← Back to Agenda</button>
+            <div id="session-info"></div>
+            <div id="paper-list"></div>
+        </div>
+        <div id="paper-detail" class="view hidden">
+            <button class="back-btn" onclick="app.backToSession()">← Back to Session</button>
+            <div id="paper-info"></div>
+        </div>
+        <div id="search-results" class="view hidden">
+            <button class="back-btn" onclick="app.showAgenda()">← Back to Agenda</button>
+            <h2>Search Results</h2>
+            <div id="results-list"></div>
+        </div>
+    </main>
+
+    <footer class="container">
+        <p>&copy; 2026 EASSSR - East Asian Society for the Scientific Study of Religion</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
