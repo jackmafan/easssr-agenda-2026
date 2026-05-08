@@ -116,16 +116,16 @@ const app = {
         list.innerHTML = '';
         session.papers.forEach(pid => {
             const paper = this.data.papers[pid];
-            if (!paper) return;
-
-            const item = document.createElement('div');
-            item.className = 'paper-item';
-            item.onclick = () => this.showPaper(paper);
-            item.innerHTML = `
-                <div class="speaker-name">${paper.speaker}</div>
-                <div class="paper-title">${paper.title}</div>
-            `;
-            list.appendChild(item);
+            if (paper && !paper.deprecated) {
+                const item = document.createElement('div');
+                item.className = 'paper-item';
+                item.onclick = () => this.showPaper(paper);
+                item.innerHTML = `
+                    <div class="speaker-name">${paper.speaker}</div>
+                    <div class="paper-title">${paper.title}</div>
+                `;
+                list.appendChild(item);
+            }
         });
 
         this.showView('session-detail');
@@ -155,6 +155,7 @@ const app = {
         const keywords = q.split(/\s+/).filter(k => k.length > 0);
         
         const results = Object.values(this.data.papers).filter(paper => {
+            if (paper.deprecated) return false;
             const content = (paper.title + paper.speaker + paper.abstract).toLowerCase();
             return keywords.every(k => content.includes(k));
         });
