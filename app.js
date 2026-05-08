@@ -7,11 +7,11 @@ const app = {
         try {
             const response = await fetch('agenda_data.json');
             this.data = await response.json();
-            
+
             this.setupTabs();
             this.setupSearch();
             this.renderAgenda(this.data.agenda[0].day);
-            
+
             // Handle browser back button
             window.onpopstate = (event) => {
                 if (event.state) {
@@ -57,13 +57,13 @@ const app = {
         const dayData = this.data.agenda.find(d => d.day === dayLabel);
         const container = document.getElementById('agenda-grid');
         container.innerHTML = '';
-        
+
         this.showView('agenda-grid');
 
         dayData.slots.forEach(slot => {
             const slotEl = document.createElement('div');
             slotEl.className = 'slot';
-            
+
             const timeEl = document.createElement('div');
             timeEl.className = 'slot-time';
             timeEl.textContent = slot.time;
@@ -71,11 +71,11 @@ const app = {
 
             const gridEl = document.createElement('div');
             gridEl.className = 'sessions-grid';
-            
+
             slot.sessions.forEach(session => {
                 const card = document.createElement('div');
                 card.className = 'session-card';
-                
+
                 // Special handling for multi-line titles (Keynotes, etc.)
                 const titleParts = session.title.split('\n').filter(p => p.trim() !== '');
                 const displayTitle = titleParts[0];
@@ -86,10 +86,10 @@ const app = {
                 } else {
                     card.style.cursor = 'default';
                 }
-                
+
                 const room = session.room ? `<div class="room-tag">${session.room}</div>` : '';
                 const paperCount = session.papers.length > 0 ? `<div class="paper-count">${session.papers.length} Papers</div>` : '';
-                
+
                 card.innerHTML = `
                     ${room}
                     <div class="session-title">${displayTitle}</div>
@@ -107,17 +107,17 @@ const app = {
     showSession(time, session, pushState = true) {
         const info = document.getElementById('session-info');
         const list = document.getElementById('paper-list');
-        
+
         info.innerHTML = `
             <div class="room-tag">${session.room} | ${time}</div>
             <h2 style="margin-bottom: 30px;">${session.title}</h2>
         `;
-        
+
         list.innerHTML = '';
         session.papers.forEach(pid => {
             const paper = this.data.papers[pid];
             if (!paper) return;
-            
+
             const item = document.createElement('div');
             item.className = 'paper-item';
             item.onclick = () => this.showPaper(paper);
@@ -129,7 +129,7 @@ const app = {
         });
 
         this.showView('session-detail');
-        if (pushState) history.pushState({view: 'session', time, session}, '');
+        if (pushState) history.pushState({ view: 'session', time, session }, '');
     },
 
     showPaper(paper, pushState = true) {
@@ -144,28 +144,32 @@ const app = {
                 ${paper.abstract}
             </div>
         `;
-        
+
         this.showView('paper-detail');
-        if (pushState) history.pushState({view: 'paper', id: paper.id}, '');
+        if (pushState) history.pushState({ view: 'paper', id: paper.id }, '');
     },
 
     performSearch(query) {
-        const results = [];
-        Object.values(this.data.papers).forEach(paper => {
-            if (paper.title.toLowerCase().includes(query) || 
-                paper.speaker.toLowerCase().includes(query) ||
-                paper.abstract.toLowerCase().includes(query)) {
-                results.push(paper);
-            }
+        if (!query) return;
+        const q = query.toLowerCase();
+        const keywords = q.split(/\s+/).filter(k => k.length > 0);
+        
+        const results = Object.values(this.data.papers).filter(paper => {
+            const content = (paper.title + paper.speaker + paper.abstract).toLowerCase();
+            return keywords.every(k => content.includes(k));
         });
 
         const list = document.getElementById('results-list');
         list.innerHTML = '';
         results.forEach(paper => {
+            const meta = this.paperToSession[paper.id];
+            const metaInfo = meta ? `<div class="search-meta">${meta.day} | ${meta.time} | ${meta.room}</div>` : '';
+            
             const item = document.createElement('div');
             item.className = 'paper-item';
             item.onclick = () => this.showPaper(paper);
             item.innerHTML = `
+                ${metaInfo}
                 <div class="speaker-name">${paper.speaker}</div>
                 <div class="paper-title">${paper.title}</div>
             `;
