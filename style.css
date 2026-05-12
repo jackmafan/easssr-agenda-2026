@@ -93,6 +93,22 @@ h1 {
     outline: none;
 }
 
+#search-trigger {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+}
+
+#search-trigger:hover {
+    color: var(--primary);
+}
+
 /* Tabs */
 nav {
     display: flex;

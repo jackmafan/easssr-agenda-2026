@@ -2,6 +2,7 @@ const app = {
     data: null,
     currentDay: null,
     history: [],
+    paperToSession: {},
 
     async init() {
         try {
@@ -9,8 +10,12 @@ const app = {
             this.data = await response.json();
 
             this.setupTabs();
+            this.buildPaperMap();
             this.setupSearch();
-            this.renderAgenda(this.data.agenda[0].day);
+            
+            if (this.data.agenda && this.data.agenda.length > 0) {
+                this.renderAgenda(this.data.agenda[0].day);
+            }
 
             // Handle browser back button
             window.onpopstate = (event) => {
@@ -23,6 +28,28 @@ const app = {
         } catch (error) {
             console.error("Failed to load agenda data:", error);
         }
+    },
+
+    buildPaperMap() {
+        this.paperToSession = {};
+        if (!this.data || !this.data.agenda) return;
+        
+        this.data.agenda.forEach(day => {
+            if (!day.slots) return;
+            day.slots.forEach(slot => {
+                if (!slot.sessions) return;
+                slot.sessions.forEach(session => {
+                    if (!session.papers) return;
+                    session.papers.forEach(pid => {
+                        this.paperToSession[pid] = {
+                            day: day.day,
+                            time: slot.time,
+                            room: session.room
+                        };
+                    });
+                });
+            });
+        });
     },
 
     setupTabs() {
@@ -42,14 +69,43 @@ const app = {
 
     setupSearch() {
         const searchInput = document.getElementById('global-search');
-        searchInput.oninput = (e) => {
-            const query = e.target.value.toLowerCase();
-            if (query.length > 1) {
+        const searchBtn = document.getElementById('search-trigger');
+
+        if (!searchInput) return;
+
+        const doSearch = () => {
+            const query = searchInput.value.trim();
+            if (query.length > 0) {
                 this.performSearch(query);
-            } else if (query.length === 0) {
+            } else {
                 this.showAgenda();
             }
         };
+
+        searchInput.oninput = (e) => {
+            const query = e.target.value.trim();
+            if (query.length === 0) {
+                this.showAgenda();
+            }
+            // Real-time search for length > 2
+            if (query.length > 2) {
+                this.performSearch(query);
+            }
+        };
+
+        searchInput.onkeydown = (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                doSearch();
+            }
+        };
+
+        if (searchBtn) {
+            searchBtn.onclick = (e) => {
+                e.preventDefault();
+                doSearch();
+            };
+        }
     },
 
     renderAgenda(dayLabel) {
@@ -156,26 +212,35 @@ const app = {
         
         const results = Object.values(this.data.papers).filter(paper => {
             if (paper.deprecated) return false;
-            const content = (paper.title + paper.speaker + paper.abstract).toLowerCase();
+            const title = paper.title || "";
+            const speaker = paper.speaker || "";
+            const abstract = paper.abstract || "";
+            const content = (title + speaker + abstract).toLowerCase();
             return keywords.every(k => content.includes(k));
         });
 
         const list = document.getElementById('results-list');
+        if (!list) return;
         list.innerHTML = '';
-        results.forEach(paper => {
-            const meta = this.paperToSession[paper.id];
-            const metaInfo = meta ? `<div class="search-meta">${meta.day} | ${meta.time} | ${meta.room}</div>` : '';
-            
-            const item = document.createElement('div');
-            item.className = 'paper-item';
-            item.onclick = () => this.showPaper(paper);
-            item.innerHTML = `
-                ${metaInfo}
-                <div class="speaker-name">${paper.speaker}</div>
-                <div class="paper-title">${paper.title}</div>
-            `;
-            list.appendChild(item);
-        });
+        
+        if (results.length === 0) {
+            list.innerHTML = '<div style="text-align:center; padding:40px; color:var(--text-dim);">No results found.</div>';
+        } else {
+            results.forEach(paper => {
+                const meta = this.paperToSession[paper.id];
+                const metaInfo = meta ? `<div class="search-meta">${meta.day} | ${meta.time} | ${meta.room}</div>` : '';
+                
+                const item = document.createElement('div');
+                item.className = 'paper-item';
+                item.onclick = () => this.showPaper(paper);
+                item.innerHTML = `
+                    ${metaInfo}
+                    <div class="speaker-name">${paper.speaker}</div>
+                    <div class="paper-title">${paper.title}</div>
+                `;
+                list.appendChild(item);
+            });
+        }
 
         this.showView('search-results');
     },
