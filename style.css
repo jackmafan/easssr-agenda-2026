@@ -30,8 +30,20 @@ body {
     padding: 0 20px;
 }
 
+/* Banner */
+.banner-container {
+    width: 100%;
+    overflow: hidden;
+}
+
+.main-banner {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
 header {
-    padding: 40px 0;
+    padding: 15px 0;
     text-align: center;
     position: sticky;
     top: 0;

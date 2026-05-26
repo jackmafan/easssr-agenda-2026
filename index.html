@@ -11,10 +11,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="banner-container">
+        <picture>
+            <!-- PC: 16:9 -->
+            <source media="(min-width: 1024px)" srcset="banner-pc.jpg">
+            <!-- Mobile: 16:9 -->
+            <source media="(min-width: 640px)" srcset="banner-mobile.jpg">
+            <!-- Mobile: 1:1 -->
+            <img src="banner-mobile-1-1.jpg" alt="EASSSR 2026 Conference Visual" class="main-banner">
+        </picture>
+    </div>
+
     <header class="glass">
         <div class="container">
-            <h1 id="main-title">EASSSR 2026</h1>
-            <p class="subtitle">Conference Agenda & Schedule</p>
             <div class="search-bar glass-light">
                 <input type="text" id="global-search" placeholder="Search speakers, titles, or keywords...">
                 <button id="search-trigger" aria-label="Search">
