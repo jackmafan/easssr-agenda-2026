@@ -44,6 +44,7 @@ const app = {
                     session.papers.forEach(pid => {
                         this.paperToSession[pid] = {
                             day: day.day,
+                            date: day.date,
                             time: slot.time,
                             room: session.room,
                             session: session
@@ -54,16 +55,34 @@ const app = {
         });
     },
 
+    formatDate(dateStr) {
+        if (!dateStr) return "";
+        const parts = dateStr.split('-');
+        if (parts.length < 3) return dateStr;
+        const month = parseInt(parts[1], 10);
+        const day = parseInt(parts[2], 10);
+        const months = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const monthName = months[month] || "";
+        let suffix = "th";
+        if (day === 1 || day === 21 || day === 31) suffix = "st";
+        else if (day === 2 || day === 22) suffix = "nd";
+        else if (day === 3 || day === 23) suffix = "rd";
+        return `${monthName} ${day}${suffix}`;
+    },
+
     setupTabs() {
         const tabsContainer = document.getElementById('day-tabs');
         this.data.agenda.forEach((day, index) => {
             const btn = document.createElement('button');
             btn.className = `tab ${index === 0 ? 'active' : ''}`;
-            btn.textContent = day.day;
+            btn.setAttribute('data-day', day.day);
+            const dateLabel = this.formatDate(day.date);
+            const cleanDay = day.day.replace(/\s+/g, ' ');
+            btn.textContent = dateLabel ? `${cleanDay} (${dateLabel})` : cleanDay;
             btn.onclick = () => {
                 document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
                 btn.classList.add('active');
-                this.renderAgenda(day.day);
+                this.renderAgenda(day.day, true);
             };
             tabsContainer.appendChild(btn);
         });
@@ -110,13 +129,15 @@ const app = {
         }
     },
 
-    renderAgenda(dayLabel) {
+    renderAgenda(dayLabel, changeView = true) {
         this.currentDay = dayLabel;
         const dayData = this.data.agenda.find(d => d.day === dayLabel);
         const container = document.getElementById('agenda-grid');
         container.innerHTML = '';
 
-        this.showView('agenda-grid');
+        if (changeView) {
+            this.showView('agenda-grid');
+        }
 
         dayData.slots.forEach(slot => {
             const slotEl = document.createElement('div');
@@ -133,6 +154,9 @@ const app = {
             slot.sessions.forEach(session => {
                 const card = document.createElement('div');
                 card.className = 'session-card';
+                if (session.room) {
+                    card.setAttribute('data-room', session.room);
+                }
 
                 // Special handling for multi-line titles (Keynotes, etc.)
                 const titleParts = session.title.split('\n').filter(p => p.trim() !== '');
@@ -164,6 +188,22 @@ const app = {
 
     showSession(time, session, pushState = true) {
         this.currentPaperSession = { time, session };
+
+        // Sync tab and background agenda grid
+        let sessionDay = null;
+        if (session.papers && session.papers.length > 0) {
+            const firstPaperMeta = this.paperToSession[session.papers[0]];
+            if (firstPaperMeta) {
+                sessionDay = firstPaperMeta.day;
+            }
+        }
+        if (sessionDay) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            const targetTab = document.querySelector(`.tab[data-day="${sessionDay}"]`);
+            if (targetTab) targetTab.classList.add('active');
+            this.renderAgenda(sessionDay, false);
+        }
+
         const info = document.getElementById('session-info');
         const list = document.getElementById('paper-list');
 
@@ -196,17 +236,26 @@ const app = {
         const meta = this.paperToSession[paper.id];
         if (meta) {
             this.currentPaperSession = { time: meta.time, session: meta.session };
+
+            // Sync tab and background agenda grid
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            const targetTab = document.querySelector(`.tab[data-day="${meta.day}"]`);
+            if (targetTab) targetTab.classList.add('active');
+            this.renderAgenda(meta.day, false);
         }
-        const metaInfo = meta ? `<div class="search-meta" style="margin-bottom: 15px;">${meta.day} | ${meta.time} | ${meta.room}</div>` : '';
+        const dateLabel = meta ? this.formatDate(meta.date) : '';
+        const cleanDay = meta ? meta.day.replace(/\s+/g, ' ') : '';
+        const dayDisplay = dateLabel ? `${cleanDay} (${dateLabel})` : cleanDay;
+        const metaInfo = meta ? `<div class="search-meta" style="margin-bottom: 5px;">${dayDisplay} | ${meta.time} | ${meta.room}</div>` : '';
 
         info.innerHTML = `
             ${metaInfo}
             <div class="speaker-name" style="font-size: 1.5rem;">${paper.speaker}</div>
             <div class="affiliation">${paper.affiliation}</div>
             <hr style="border: none; border-top: 1px solid var(--glass-border); margin: 20px 0;">
-            <div class="paper-title" style="font-size: 1.5rem; margin-bottom: 20px;">${paper.title}</div>
+            <div class="paper-title" style="font-size: 1.5rem; margin-bottom: 5px;">${paper.title}</div>
             <div class="abstract-text">
-                <h3 style="color: var(--accent); margin-bottom: 10px;">Abstract</h3>
+                <div style="color: var(--accent);font-size: 1rem; font-weight: 600; margin-bottom: 5px;">Abstract</div>
                 ${paper.abstract}
             </div>
         `;
@@ -238,7 +287,10 @@ const app = {
         } else {
             results.forEach(paper => {
                 const meta = this.paperToSession[paper.id];
-                const metaInfo = meta ? `<div class="search-meta">${meta.day} | ${meta.time} | ${meta.room}</div>` : '';
+                const dateLabel = meta ? this.formatDate(meta.date) : '';
+                const cleanDay = meta ? meta.day.replace(/\s+/g, ' ') : '';
+                const dayDisplay = dateLabel ? `${cleanDay} (${dateLabel})` : cleanDay;
+                const metaInfo = meta ? `<div class="search-meta">${dayDisplay} | ${meta.time} | ${meta.room}</div>` : '';
 
                 const item = document.createElement('div');
                 item.className = 'paper-item';

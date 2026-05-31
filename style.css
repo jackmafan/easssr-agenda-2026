@@ -1,6 +1,8 @@
 :root {
-    --primary: #4f46e5;
-    --primary-hover: #4338ca;
+    /* --primary: #4f46e5; */
+    /* --primary-hover: #4338ca; */
+    --primary: #271f66;
+    --primary-hover: #271f66;
     --bg-light: #f8fafc;
     --card-bg: rgba(255, 255, 255, 0.8);
     --text-main: #0f172a;
@@ -8,7 +10,8 @@
     --text-dim: #334155;
     /* Deep Slate 700 - Much darker than before */
     --glass-border: rgba(0, 0, 0, 0.1);
-    --accent: #b45309;
+    --accent: #8d4287;
+    /*--accent: #b45309;*/
 }
 
 * {
@@ -132,6 +135,10 @@ nav {
     flex-wrap: wrap;
 }
 
+#app-content {
+    margin-top: 30px;
+}
+
 .tab {
     padding: 10px 25px;
     border-radius: 20px;
@@ -206,20 +213,23 @@ nav {
 
 /* Room Colors */
 .session-card[data-room="Room A"] {
-    border-top: 4px solid #60a5fa;
+    /* border-top: 4px solid #60a5fa; */
+    border-top: 4px solid #271f66;
 }
 
 .session-card[data-room="Room B"] {
-    border-top: 4px solid #34d399;
+    /* border-top: 4px solid #34d399; */
+    border-top: 4px solid #271f66;
 }
 
 .session-card[data-room="Room C"] {
-    border-top: 4px solid #f472b6;
+    /* border-top: 4px solid #f472b6; */
+    border-top: 4px solid #271f66;
 }
 
-.session-card[data-room="Room D"] {
+/* .session-card[data-room="Room D"] {
     border-top: 4px solid #fbbf24;
-}
+} */
 
 .session-card:hover {
     transform: translateY(-5px);
@@ -228,11 +238,11 @@ nav {
 }
 
 .room-tag {
-    font-size: 0.75rem;
-    font-weight: 700;
+    font-size: 1rem;
+    font-weight: 600;
     color: var(--primary);
     text-transform: uppercase;
-    margin-bottom: 12px;
+    margin-bottom: 5px;
 }
 
 .session-title {
@@ -292,7 +302,7 @@ nav {
 }
 
 .search-meta {
-    font-size: 0.8rem;
+    font-size: 1rem;
     color: var(--primary);
     font-weight: 600;
     margin-bottom: 5px;
@@ -300,18 +310,18 @@ nav {
 }
 
 .abstract-text {
-    margin-top: 20px;
+    margin-top: 5px;
     color: var(--text-main);
     white-space: pre-line;
     font-weight: 300;
 }
 
 .affiliation {
-    color: #4f46e5 !important;
+    color: #271f66 !important;
     /* Force a clear indigo color */
-    font-size: 0.95rem;
-    font-weight: 500;
-    margin-bottom: 15px;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 5px;
 }
 
 #paper-info .paper-title {
