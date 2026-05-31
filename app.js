@@ -3,6 +3,7 @@ const app = {
     currentDay: null,
     history: [],
     paperToSession: {},
+    isInitialLoad: true,
 
     async init() {
         try {
@@ -12,7 +13,7 @@ const app = {
             this.setupTabs();
             this.buildPaperMap();
             this.setupSearch();
-            
+
             if (this.data.agenda && this.data.agenda.length > 0) {
                 this.renderAgenda(this.data.agenda[0].day);
             }
@@ -33,7 +34,7 @@ const app = {
     buildPaperMap() {
         this.paperToSession = {};
         if (!this.data || !this.data.agenda) return;
-        
+
         this.data.agenda.forEach(day => {
             if (!day.slots) return;
             day.slots.forEach(slot => {
@@ -44,7 +45,8 @@ const app = {
                         this.paperToSession[pid] = {
                             day: day.day,
                             time: slot.time,
-                            room: session.room
+                            room: session.room,
+                            session: session
                         };
                     });
                 });
@@ -161,6 +163,7 @@ const app = {
     },
 
     showSession(time, session, pushState = true) {
+        this.currentPaperSession = { time, session };
         const info = document.getElementById('session-info');
         const list = document.getElementById('paper-list');
 
@@ -190,11 +193,18 @@ const app = {
 
     showPaper(paper, pushState = true) {
         const info = document.getElementById('paper-info');
+        const meta = this.paperToSession[paper.id];
+        if (meta) {
+            this.currentPaperSession = { time: meta.time, session: meta.session };
+        }
+        const metaInfo = meta ? `<div class="search-meta" style="margin-bottom: 15px;">${meta.day} | ${meta.time} | ${meta.room}</div>` : '';
+
         info.innerHTML = `
-            <div class="speaker-name" style="font-size: 2rem;">${paper.speaker}</div>
+            ${metaInfo}
+            <div class="speaker-name" style="font-size: 1.5rem;">${paper.speaker}</div>
             <div class="affiliation">${paper.affiliation}</div>
-            <div class="paper-title" style="font-size: 1.4rem; color: white; margin-bottom: 20px;">${paper.title}</div>
             <hr style="border: none; border-top: 1px solid var(--glass-border); margin: 20px 0;">
+            <div class="paper-title" style="font-size: 1.5rem; margin-bottom: 20px;">${paper.title}</div>
             <div class="abstract-text">
                 <h3 style="color: var(--accent); margin-bottom: 10px;">Abstract</h3>
                 ${paper.abstract}
@@ -209,7 +219,7 @@ const app = {
         if (!query) return;
         const q = query.toLowerCase();
         const keywords = q.split(/\s+/).filter(k => k.length > 0);
-        
+
         const results = Object.values(this.data.papers).filter(paper => {
             if (paper.deprecated) return false;
             const title = paper.title || "";
@@ -222,14 +232,14 @@ const app = {
         const list = document.getElementById('results-list');
         if (!list) return;
         list.innerHTML = '';
-        
+
         if (results.length === 0) {
             list.innerHTML = '<div style="text-align:center; padding:40px; color:var(--text-dim);">No results found.</div>';
         } else {
             results.forEach(paper => {
                 const meta = this.paperToSession[paper.id];
                 const metaInfo = meta ? `<div class="search-meta">${meta.day} | ${meta.time} | ${meta.room}</div>` : '';
-                
+
                 const item = document.createElement('div');
                 item.className = 'paper-item';
                 item.onclick = () => this.showPaper(paper);
@@ -248,7 +258,14 @@ const app = {
     showView(id) {
         document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
         document.getElementById(id).classList.remove('hidden');
-        window.scrollTo(0, 0);
+        if (this.isInitialLoad) {
+            window.scrollTo(0, 0);
+            this.isInitialLoad = false;
+        } else if (id !== 'search-results') {
+            const banner = document.querySelector('.banner-container');
+            const bannerHeight = banner ? banner.offsetHeight : 0;
+            window.scrollTo(0, bannerHeight);
+        }
     },
 
     showAgenda(pushState = true) {
@@ -257,7 +274,11 @@ const app = {
     },
 
     backToSession() {
-        this.showView('session-detail');
+        if (this.currentPaperSession) {
+            this.showSession(this.currentPaperSession.time, this.currentPaperSession.session, false);
+        } else {
+            this.showAgenda();
+        }
     },
 
     navigate(view, id, pushState) {
