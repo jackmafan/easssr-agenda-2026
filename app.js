@@ -78,7 +78,7 @@ const app = {
             btn.setAttribute('data-day', day.day);
             const dateLabel = this.formatDate(day.date);
             const cleanDay = day.day.replace(/\s+/g, ' ');
-            btn.textContent = dateLabel ? `${cleanDay} (${dateLabel})` : cleanDay;
+            btn.textContent = dateLabel ? `${cleanDay} | ${dateLabel}` : cleanDay;
             btn.onclick = () => {
                 document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
                 btn.classList.add('active');
@@ -127,6 +127,22 @@ const app = {
                 doSearch();
             };
         }
+
+        // Checkbox search filter real-time trigger
+        const filterTitle = document.getElementById('filter-title');
+        const filterAuthor = document.getElementById('filter-author');
+        const filterAbstract = document.getElementById('filter-abstract');
+
+        const onFilterChange = () => {
+            const query = searchInput.value.trim();
+            if (query.length > 0) {
+                this.performSearch(query);
+            }
+        };
+
+        if (filterTitle) filterTitle.onchange = onFilterChange;
+        if (filterAuthor) filterAuthor.onchange = onFilterChange;
+        if (filterAbstract) filterAbstract.onchange = onFilterChange;
     },
 
     renderAgenda(dayLabel, changeView = true) {
@@ -264,17 +280,36 @@ const app = {
         if (pushState) history.pushState({ view: 'paper', id: paper.id }, '');
     },
 
+    highlightText(text, keywords) {
+        if (!text || !keywords || keywords.length === 0) return text;
+        let highlighted = text;
+        keywords.forEach(keyword => {
+            if (!keyword) return;
+            const escapedKeyword = keyword.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+            const regex = new RegExp(`(${escapedKeyword})`, 'gi');
+            highlighted = highlighted.replace(regex, '<mark>$1</mark>');
+        });
+        return highlighted;
+    },
+
     performSearch(query) {
         if (!query) return;
         const q = query.toLowerCase();
         const keywords = q.split(/\s+/).filter(k => k.length > 0);
 
+        const searchTitle = document.getElementById('filter-title')?.checked;
+        const searchAuthor = document.getElementById('filter-author')?.checked;
+        const searchAbstract = document.getElementById('filter-abstract')?.checked;
+
         const results = Object.values(this.data.papers).filter(paper => {
             if (paper.deprecated) return false;
-            const title = paper.title || "";
-            const speaker = paper.speaker || "";
-            const abstract = paper.abstract || "";
-            const content = (title + speaker + abstract).toLowerCase();
+
+            let searchParts = [];
+            if (searchTitle) searchParts.push(paper.title || "");
+            if (searchAuthor) searchParts.push(paper.speaker || "");
+            if (searchAbstract) searchParts.push(paper.abstract || "");
+
+            const content = searchParts.join(" ").toLowerCase();
             return keywords.every(k => content.includes(k));
         });
 
@@ -292,13 +327,16 @@ const app = {
                 const dayDisplay = dateLabel ? `${cleanDay} (${dateLabel})` : cleanDay;
                 const metaInfo = meta ? `<div class="search-meta">${dayDisplay} | ${meta.time} | ${meta.room}</div>` : '';
 
+                const speakerHtml = this.highlightText(paper.speaker, keywords);
+                const titleHtml = this.highlightText(paper.title, keywords);
+
                 const item = document.createElement('div');
                 item.className = 'paper-item';
                 item.onclick = () => this.showPaper(paper);
                 item.innerHTML = `
                     ${metaInfo}
-                    <div class="speaker-name">${paper.speaker}</div>
-                    <div class="paper-title">${paper.title}</div>
+                    <div class="speaker-name">${speakerHtml}</div>
+                    <div class="paper-title">${titleHtml}</div>
                 `;
                 list.appendChild(item);
             });

@@ -126,6 +126,37 @@ h1 {
     color: var(--primary);
 }
 
+.search-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.search-filters {
+    display: flex;
+    gap: 15px;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    font-weight: 500;
+}
+
+.search-filters label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.search-filters input[type="checkbox"] {
+    accent-color: var(--primary);
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+}
+
 /* Tabs */
 nav {
     display: flex;
@@ -372,6 +403,8 @@ nav {
 
 footer {
     text-align: center;
+    margin-top: 20px 0;
+    margin-bottom: 20px 0;
     padding: 60px 0;
     color: var(--text-dim);
     font-size: 0.8rem;
@@ -387,4 +420,13 @@ footer {
         padding: 8px 15px;
         font-size: 0.9rem;
     }
+}
+
+/* 搜尋關鍵字高亮樣式 */
+mark {
+    background-color: rgba(141, 66, 135, 0.2);
+    /* 優雅的淡粉紫色，匹配主題的 --accent 色調 */
+    color: var(--text-main);
+    border-radius: 3px;
+    padding: 0 3px;
 }
