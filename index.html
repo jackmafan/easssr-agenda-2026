@@ -22,7 +22,7 @@
         </picture>
     </div>
 
-    <header class="glass">
+    <header id="app-header" class="glass">
         <div class="container">
             <div class="search-container">
                 <div class="search-bar glass-light">
@@ -45,7 +45,25 @@
     </nav>
 
     <main id="app-content" class="container">
-        <div id="agenda-grid" class="view">
+        <div id="home-view" class="view">
+            <div class="home-container">
+                <div class="home-buttons">
+                    <a href="Schedule.pdf" target="_blank" download="Schedule.pdf" class="home-btn pdf-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        Download PDF Agenda
+                    </a>
+                    <a href="https://easssr.org/annual-meeting/the-8th-annual-conference-2026/" target="_blank" class="home-btn link-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="btn-icon"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                        EASSSR Conference Website
+                    </a>
+                </div>
+                <div class="home-image-container">
+                    <h3>Venue Layout</h3>
+                    <img src="Room_config.jpg" alt="Room Configuration Layout" class="room-config-img">
+                </div>
+            </div>
+        </div>
+        <div id="agenda-grid" class="view hidden">
             <!-- Agenda content will be injected here -->
         </div>
         <div id="session-detail" class="view hidden">

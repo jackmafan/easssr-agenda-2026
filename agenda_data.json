@@ -138,7 +138,7 @@
       "affiliation": "Fudan University",
       "abstract": "In contemporary China, the fahui (ritual assembly) remains a cornerstone of Taoist practice, serving as a vital medium for practitioners to seek divine intervention, healing, and spiritual merit. Traditionally, the perceived efficacy (ling yan) of these rituals is deeply rooted in physical co-presence and \"sensory witness.\" Believers establish a sense of \"sincerity\" (cheng), the prerequisite for a successful ritual, through the material environment of the temple, the collective resonance of chanting, and face-to-face interactions with the clergy. In this traditional framework, the sacred space of the temple provides a sense of exclusivity and tangible connection to the divine.\n\nHowever, since 2022, this conventional mode of religious engagement has undergone a significant transformation. Driven by the impact of COVID-19 lockdowns and the broader trend of \"digital modernization,\" many urban temples, including the prominent Baiyun Guan in Shanghai, have migrated their ritual services to digital platforms. While these online fahui projects, often mediated through WeChat mini-programs, were designed to ensure institutional continuity and provide a \"modern\" religious service, they have encountered unexpected resistance from the laity.\n\nFrom my perspective, the central tension of this digital transition lies in a profound mismatch between the clergy's rational alternative and the laity's expectations. The resident priests, especially in developed areas, many being graduates of modern religious academies, tend to emphasize the educational, psychological, and symbolic functions of the digital ritual. In this view, the digital ritual is a successful adaptation: it is compliant with public health regulations, scalable, and emphasizes the \"educational\" spirit of honoring ancestors rather than superstitious transaction. For them, the spiritual essence of the ritual is not diminished by its digital medium. In contrast, lay people perceive the digital screen as a barrier that \"dilutes\" the ritual's potency. The infinite reproducibility of online ceremonies, in their view, erodes the \"sacred scarcity\" and the individualized \"special care\" from the deities that they seek.\n\nThis paper is based on an anthropological investigation I conducted in 2022 at Shanghai Baiyun Guan. Utilizing participant observation and semi-structured interviews with both resident Taoist priests and lay practitioners, I examine how the digitization of rituals reshapes the logic of religious authority and authenticity. By analyzing the \"crisis of presence\" in virtual space, this study explores the challenges traditional religions face when trying to maintain their enchantment while negotiating with constraints of presence in the digital world.",
       "co_authors": [],
-      "deprecated": false
+      "deprecated": true
     },
     "21": {
       "id": "21",
@@ -253,7 +253,7 @@
       "title": "On the social quantum hypothesis of spirituality and religion",
       "speaker": "ChinChen Cheng",
       "affiliation": "Institute of Religion, National Chengchi University",
-      "abstract": "In the early stages of human civilization, people revered deities. Faced with the unknown, they \n\nused divination and mediums to interpret the will of the gods, which gave rise to philosophical \n\ndoctrines, spells, and religious rituals in order to communicate with the divine. After the \n\nEnlightenment, scientific research and other scientific approaches became the foundation of the \n\nmodern mainstream ideology, while disenchantment further weakened the position of traditional \n\nreligion in the minds of most people. The contemporary spiritual movement's various methods and \n\ncourses, diverse supplementary products, and the emergence of monks and masters from different \n\nschools of thought are gaining popularity among urban residents with capitalist tendencies who are \n\nboth lonely and under immense pressure. \"Spiritual but not religious\" has become a popular \n\nkeyword. Religious scholars and sociologists are eager to understand these phenomena and are \n\nconducting multifaceted research using social sciences. While observing whether changes in the \n\nenvironment and ecology are the primary cause of change is an important reference, it is difficult to \n\nsummarize and generalize the ever-changing needs of people and the environment, even with the best \n\nefforts. I would like to propose an essential but interdisciplinary hypothesis: there are shared social \n\nneeds and commonalities between spirituality (primarily individualistic) and religion (primarily \n\ncollectivist). Healing activities that help people escape suffering and attain happiness. This study will \n\nattempt to use quantum science theory to hypothesize, explain, and infer, using both theory and \n\npractice to establish the hypothesis. It is hoped that scientific progress will allow the results to be \n\nexperimentally verified. The main discussion will revolve around whether the power of religious \n\npractices such as magic, grace, blessings, and darsan can be made effective through quantum \n\nhypotheses. When various theories of torsion fields and quantum technology are presented, it will be \n\nas if a master has appeared to bless the audience.  \n\nKeyword：Religious practice、healing、quantum theory、Torsion、quantum technology",
+      "abstract": "In the early stages of human civilization, people revered deities. Faced with the unknown, they used divination and mediums to interpret the will of the gods, which gave rise to philosophical doctrines, spells, and religious rituals in order to communicate with the divine. After the Enlightenment, scientific research and other scientific approaches became the foundation of the modern mainstream ideology, while disenchantment further weakened the position of traditional religion in the minds of most people. The contemporary spiritual movement's various methods and courses, diverse supplementary products, and the emergence of monks and masters from different schools of thought are gaining popularity among urban residents with capitalist tendencies who are both lonely and under immense pressure. \"Spiritual but not religious\" has become a popular keyword. Religious scholars and sociologists are eager to understand these phenomena and are conducting multifaceted research using social sciences. While observing whether changes in the environment and ecology are the primary cause of change is an important reference, it is difficult to summarize and generalize the ever-changing needs of people and the environment, even with the best efforts. I would like to propose an essential but interdisciplinary hypothesis: there are shared social needs and commonalities between spirituality (primarily individualistic) and religion (primarily collectivist). Healing activities that help people escape suffering and attain happiness. This study will attempt to use quantum science theory to hypothesize, explain, and infer, using both theory and practice to establish the hypothesis. It is hoped that scientific progress will allow the results to be experimentally verified. The main discussion will revolve around whether the power of religious practices such as magic, grace, blessings, and darsan can be made effective through quantum hypotheses. When various theories of torsion fields and quantum technology are presented, it will be as if a master has appeared to bless the audience.  Keyword：Religious practice、healing、quantum theory、Torsion、quantum technology",
       "co_authors": [],
       "deprecated": false
     },
@@ -1132,41 +1132,41 @@
       "date": "2026-07-01",
       "slots": [
         {
-          "time": "09:30-09:35",
+          "time": "10:00-10:05",
           "sessions": [
             {
-              "room": "Room A",
+              "room": "Central Conference Hall",
               "title": "Opening Ceremony\n\nVenerable Ru Chang \nDirector, Fo Guang Shan Buddha Museum",
               "papers": []
             }
           ]
         },
         {
-          "time": "09:35-10:35",
+          "time": "10:05-11:15",
           "sessions": [
             {
-              "room": "Room A",
-              "title": "Presidential Address\n\nThree Layers of Religion in the Global Religious Field\n\nDavid A. Palmer \nPresident, EASSSR",
+              "room": "Central Conference Hall",
+              "title": "Presidential Address\n\n\"Three Layers of Religion in the Global Religious Field\"\n\nPalmer, David A.\nPresident, EASSSR",
               "papers": []
             }
           ]
         },
         {
-          "time": "10:35-10:45",
+          "time": "11:15-11:30",
           "sessions": [
             {
-              "room": "Room A",
+              "room": " ",
               "title": "Break",
               "papers": []
             }
           ]
         },
         {
-          "time": "10:45-12:00",
+          "time": "11:30-12:00",
           "sessions": [
             {
-              "room": "Room A",
-              "title": "Keynote Speech\n\nArchitects of Buddhist Leisure: Monuments, Museums, and \nAmusement Parks in the Practice of Modern Buddhism\n\nMcDaniel, Justin\nDepartment of Religious Studies, University of Pennsylvania",
+              "room": "Central Conference Hall",
+              "title": "Video Appreciation\n\n\"AI in Religious Studies\"\n\nLancaster, Lewis R. \nUniversity of California, Berkeley",
               "papers": []
             }
           ]
@@ -1175,7 +1175,7 @@
           "time": "12:00-13:10",
           "sessions": [
             {
-              "room": "Room A",
+              "room": " ",
               "title": "Lunch",
               "papers": []
             }
@@ -1186,7 +1186,7 @@
           "sessions": [
             {
               "room": "Room A",
-              "title": "Digitalized Environmental and \nPeace Movements of SGI",
+              "title": "Digitalized Environmental and \nPeace Movements of SGI\nModerator: Fisker-Nielsen, Anne Mette",
               "papers": [
                 "73",
                 "87",
@@ -1196,7 +1196,7 @@
             },
             {
               "room": "Room B",
-              "title": "Religion and Social Welfare",
+              "title": "Religion and Social Welfare\nModerator: Laliberte, Andre",
               "papers": [
                 "65",
                 "75",
@@ -1206,7 +1206,7 @@
             },
             {
               "room": "Room C",
-              "title": "Religious Liberty Issues in East Asia",
+              "title": "Religious Liberty Issues in East Asia\nModerator: Introvigne, Massimo",
               "papers": [
                 "112",
                 "29",
@@ -1220,7 +1220,7 @@
           "time": "14:40-15:00",
           "sessions": [
             {
-              "room": "Room A",
+              "room": " ",
               "title": "Break",
               "papers": []
             }
@@ -1231,25 +1231,25 @@
           "sessions": [
             {
               "room": "Room A",
-              "title": "Religions in Southeast Asia I",
+              "title": "Religions in Southeast Asia I\nModerator: Shu, Mu-Lung",
               "papers": [
                 "88",
                 "130",
-                "90"
+                "71"
               ]
             },
             {
               "room": "Room B",
-              "title": "Migration, Politics and Religion I",
+              "title": "Religion, Social Conflict and War\nModerator: Sakurai, Yoshihide",
               "papers": [
-                "126",
-                "117",
-                "52"
+                "85",
+                "5",
+                "77"
               ]
             },
             {
               "room": "Room C",
-              "title": "Religious Resilience and Innovation \nin the Digital Age I",
+              "title": "Religious Resilience and Innovation \nin the Digital Age I\nModerator: Irons, Edward",
               "papers": [
                 "37",
                 "38",
@@ -1262,28 +1262,18 @@
           "time": "16:10-16:15",
           "sessions": [
             {
-              "room": "Room A",
+              "room": " ",
               "title": "Break",
               "papers": []
             }
           ]
         },
         {
-          "time": "16:15-16:35",
+          "time": "16:15-17:15",
           "sessions": [
             {
-              "room": "Room A",
-              "title": "Video Appreciation\n\nAI in Religious Studies\n\nLancaster, Lewis R. \nUniversity of California, Berkeley",
-              "papers": []
-            }
-          ]
-        },
-        {
-          "time": "16:35-17:15",
-          "sessions": [
-            {
-              "room": "Room A",
-              "title": "Introduction of Fo Guang Shan",
+              "room": "Central Conference Hall",
+              "title": "Overview & Highlights of Fo Guang Shan",
               "papers": []
             }
           ]
@@ -1299,7 +1289,7 @@
           "sessions": [
             {
               "room": "Room A",
-              "title": "Spirituality, Science, and Animal \nin the Digitalized Worlds",
+              "title": "Spirituality, Science, and Animal \nin the Digitalized Worlds\nModerator: Song, Francis Jae-Ryong",
               "papers": [
                 "81",
                 "91",
@@ -1309,7 +1299,7 @@
             },
             {
               "room": "Room B",
-              "title": "Migration, Politics and Religion II",
+              "title": "Migration, Politics and Religion I\nModerator: Ng, Ka Shing",
               "papers": [
                 "120",
                 "10",
@@ -1319,7 +1309,7 @@
             },
             {
               "room": "Room C",
-              "title": "Religious Identity in the \nDigital Age",
+              "title": "Religious Identity in the Digital Age\nModerator: Shimizu, Koki",
               "papers": [
                 "79",
                 "36",
@@ -1333,7 +1323,7 @@
           "time": "10:45-11:00",
           "sessions": [
             {
-              "room": "Room A",
+              "room": " ",
               "title": "Break",
               "papers": []
             }
@@ -1344,7 +1334,7 @@
           "sessions": [
             {
               "room": "Room A",
-              "title": "Religion, Gender and Sexuality",
+              "title": "Religion, Gender and Sexuality\nModerator: Wang, Yang",
               "papers": [
                 "8",
                 "98",
@@ -1353,7 +1343,7 @@
             },
             {
               "room": "Room B",
-              "title": "Migration, Politics and Religion III",
+              "title": "Migration, Politics and Religion II\nModerator: Chaopreecha, Jakraphan",
               "papers": [
                 "46",
                 "14",
@@ -1362,7 +1352,7 @@
             },
             {
               "room": "Room C",
-              "title": "Religion and Social Theory I",
+              "title": "Religion and Social Theory I\nModerator: Yang, Xiaozhao",
               "papers": [
                 "12",
                 "34",
@@ -1375,7 +1365,7 @@
           "time": "12:10-13:10",
           "sessions": [
             {
-              "room": "Room A",
+              "room": " ",
               "title": "Lunch",
               "papers": []
             }
@@ -1386,7 +1376,7 @@
           "sessions": [
             {
               "room": "Room A",
-              "title": "Dao, Crisis, and Adaptation",
+              "title": "Dao, Crisis, and Adaptation\nModerator: Ng, William",
               "papers": [
                 "47",
                 "43",
@@ -1396,7 +1386,7 @@
             },
             {
               "room": "Room B",
-              "title": "Civil Religion and Religious \nSocial Engagement",
+              "title": "Civil Religion and Religious \nSocial Engagement\nModerator: Chan, Shun Hing",
               "papers": [
                 "84",
                 "96",
@@ -1406,7 +1396,7 @@
             },
             {
               "room": "Room C",
-              "title": "Religion in Quantitative Focus",
+              "title": "Religion in Quantitative Focus\nModerator: Su, Kuo-Hsien",
               "papers": [
                 "116",
                 "40",
@@ -1420,7 +1410,7 @@
           "time": "14:40-15:00",
           "sessions": [
             {
-              "room": "Room A",
+              "room": " ",
               "title": "Break",
               "papers": []
             }
@@ -1431,7 +1421,7 @@
           "sessions": [
             {
               "room": "Room A",
-              "title": "Religion and Gender",
+              "title": "Religion and Gender\nModerator: Huang, Weishan",
               "papers": [
                 "66",
                 "68",
@@ -1440,7 +1430,7 @@
             },
             {
               "room": "Room B",
-              "title": "Religious Transmission and\n Informal Islamic Education \nin South Korea and Taiwan",
+              "title": "Religious Transmission and  Informal Islamic \nEducation in South Korea and Taiwan\nModerator: Chiou, Syuan Yuan",
               "papers": [
                 "49",
                 "50",
@@ -1449,11 +1439,11 @@
             },
             {
               "room": "Room C",
-              "title": "Religions in Southeast Asia II",
+              "title": "Religions in Southeast Asia II\nModerator: Lin, Yu-Sheng",
               "papers": [
                 "109",
                 "70",
-                "71"
+                "90"
               ]
             }
           ]
@@ -1462,7 +1452,7 @@
           "time": "16:10-16:15",
           "sessions": [
             {
-              "room": "Room A",
+              "room": " ",
               "title": "Break",
               "papers": []
             }
@@ -1472,8 +1462,8 @@
           "time": "16:15-17:15",
           "sessions": [
             {
-              "room": "Room A",
-              "title": "Tour",
+              "room": " ",
+              "title": "TOUR\n\nSix Perfections Pagoda One-Stroke Calligraphy & Twin Pavilions Tea Chan Ceremony",
               "papers": []
             }
           ]
@@ -1489,7 +1479,7 @@
           "sessions": [
             {
               "room": "Room A",
-              "title": "Ritual, Festival and Religion",
+              "title": "Ritual, Festival and Religion\nModerator: Wang, Bing",
               "papers": [
                 "127",
                 "124",
@@ -1499,7 +1489,7 @@
             },
             {
               "room": "Room B",
-              "title": "Religion in Social Media",
+              "title": "Religion in Social Media\nModerator: Shmushko, Kai",
               "papers": [
                 "48",
                 "97",
@@ -1509,7 +1499,7 @@
             },
             {
               "room": "Room C",
-              "title": "Religion and Social Theory II",
+              "title": "Religion and Social Theory II\nModerator: Lim, Francis Khek Gee",
               "papers": [
                 "64",
                 "111",
@@ -1523,7 +1513,7 @@
           "time": "10:45-11:00",
           "sessions": [
             {
-              "room": "Room A",
+              "room": " ",
               "title": "Break",
               "papers": []
             }
@@ -1534,7 +1524,7 @@
           "sessions": [
             {
               "room": "Room A",
-              "title": "Religion and Arts",
+              "title": "Religion and Arts\nModerator: Ho, Wai Chung",
               "papers": [
                 "25",
                 "94",
@@ -1543,20 +1533,20 @@
             },
             {
               "room": "Room B",
-              "title": "Religions in Southeast Asia III",
+              "title": "Religious Resilience and Innovation \nin the Digital Age II\nModerator: Lin, Ching-Chih",
               "papers": [
                 "119",
                 "41",
-                "7"
+                "33"
               ]
             },
             {
               "room": "Room C",
-              "title": "Religion, Social Conflict and War",
+              "title": "Migration, Politics and Religion III\nModerator: Tajima, Tadaastu",
               "papers": [
-                "85",
-                "5",
-                "77"
+                "126",
+                "117",
+                "52"
               ]
             }
           ]
@@ -1565,37 +1555,36 @@
           "time": "12:10-13:10",
           "sessions": [
             {
-              "room": "Room A",
+              "room": " ",
               "title": "Lunch",
               "papers": []
             }
           ]
         },
         {
-          "time": "13:10-14:40",
+          "time": "13:10-14:20",
           "sessions": [
             {
               "room": "Room A",
-              "title": "Religion, Market, and New Religion in the Modern World",
+              "title": "Religion, Economics, and New Religion \nin the Modern World\nModerator: Tovankasame, Nicha",
               "papers": [
                 "9",
                 "13",
-                "45",
                 "22"
               ]
             },
             {
               "room": "Room B",
-              "title": "Religious Resilience and Innovation \nin the Digital Age II",
+              "title": "Religious Resilience and Innovation \nin the Digital Age III\nModerator: Tischer, Jacob",
               "papers": [
                 "39",
-                "33",
-                "19"
+                "7",
+                "45"
               ]
             },
             {
               "room": "Room C",
-              "title": "Digital Faith Communities",
+              "title": "Digital Faith Communities\nModerator: Horiuchi, Midori",
               "papers": [
                 "102",
                 "59",
@@ -1605,41 +1594,41 @@
           ]
         },
         {
-          "time": "14:40-15:00",
+          "time": "14:20-14:40",
           "sessions": [
             {
-              "room": "Room A",
+              "room": " ",
               "title": "Break",
               "papers": []
             }
           ]
         },
         {
-          "time": "15:00-16:10",
+          "time": "14:40-16:50",
           "sessions": [
             {
-              "room": "Room A",
+              "room": "Central Conference Hall",
               "title": "Plenary Meeting",
               "papers": []
             }
           ]
         },
         {
-          "time": "16:10-16:15",
+          "time": "16:50-16:55",
           "sessions": [
             {
-              "room": "Room A",
+              "room": " ",
               "title": "Break",
               "papers": []
             }
           ]
         },
         {
-          "time": "16:15-18:00",
+          "time": "16:55-18:00",
           "sessions": [
             {
-              "room": "Room A",
-              "title": "Tour",
+              "room": " ",
+              "title": "TOUR\n\nMain Hall Exhibitions & Shrines",
               "papers": []
             }
           ]
@@ -1648,8 +1637,8 @@
           "time": "18:15-20:30",
           "sessions": [
             {
-              "room": "Room A",
-              "title": "Farewell Dinner",
+              "room": " ",
+              "title": "Farewell Dinner\n\nDiner at Fo Guang Shan",
               "papers": []
             }
           ]
@@ -1664,8 +1653,8 @@
           "time": "09:15-12:00",
           "sessions": [
             {
-              "room": "Room A",
-              "title": "Tour \n(Morning)",
+              "room": " ",
+              "title": "TOUR \n\nSutra Repository",
               "papers": []
             }
           ]
@@ -1674,8 +1663,8 @@
           "time": "12:00-13:30",
           "sessions": [
             {
-              "room": "Room A",
-              "title": "Experiencing the Formal Meal \nOffering in the Monastery",
+              "room": " ",
+              "title": "Experiencing the Formal Meal Offering in the Monastery",
               "papers": []
             }
           ]
@@ -1684,8 +1673,8 @@
           "time": "13:30-16:30",
           "sessions": [
             {
-              "room": "Room A",
-              "title": "Tour \n(Afternoon)",
+              "room": " ",
+              "title": "TOUR \n\n Fo Guang Shan Monastery",
               "papers": []
             }
           ]
@@ -1694,7 +1683,7 @@
           "time": "16:30-16:45",
           "sessions": [
             {
-              "room": "Room A",
+              "room": " ",
               "title": "Departure",
               "papers": []
             }

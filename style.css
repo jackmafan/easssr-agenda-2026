@@ -229,6 +229,7 @@ nav {
 .session-card {
     background: white;
     border: 1px solid var(--glass-border);
+    border-top: 4px solid var(--primary);
     border-radius: 15px;
     padding: 25px;
     cursor: pointer;
@@ -429,4 +430,95 @@ mark {
     color: var(--text-main);
     border-radius: 3px;
     padding: 0 3px;
+}
+
+/* Home View Styling */
+.home-container {
+    max-width: 800px;
+    margin: 30px auto 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 35px;
+    animation: fadeIn 0.5s ease;
+}
+
+.home-buttons {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+
+.home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.pdf-btn {
+    background: var(--primary);
+    color: white;
+    border: 1px solid var(--primary);
+}
+
+.pdf-btn:hover {
+    background: var(--primary);
+    filter: brightness(1.2);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(39, 31, 102, 0.25);
+}
+
+.link-btn {
+    background: white;
+    color: var(--primary);
+    border: 1px solid var(--glass-border);
+}
+
+.link-btn:hover {
+    background: var(--bg-light);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.btn-icon {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.home-image-container {
+    width: 100%;
+    text-align: center;
+    background: white;
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.home-image-container h3 {
+    font-size: 1.25rem;
+    color: var(--primary);
+    margin-bottom: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.room-config-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }

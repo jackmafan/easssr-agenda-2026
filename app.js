@@ -14,16 +14,20 @@ const app = {
             this.buildPaperMap();
             this.setupSearch();
 
-            if (this.data.agenda && this.data.agenda.length > 0) {
-                this.renderAgenda(this.data.agenda[0].day);
-            }
+            this.showHome(false);
 
             // Handle browser back button
             window.onpopstate = (event) => {
                 if (event.state) {
-                    this.navigate(event.state.view, event.state.id, false);
+                    if (event.state.view === 'home') {
+                        this.showHome(false);
+                    } else if (event.state.view === 'agenda') {
+                        this.showAgenda(false);
+                    } else {
+                        this.navigate(event.state.view, event.state.id, false);
+                    }
                 } else {
-                    this.showAgenda(false);
+                    this.showHome(false);
                 }
             };
         } catch (error) {
@@ -72,9 +76,21 @@ const app = {
 
     setupTabs() {
         const tabsContainer = document.getElementById('day-tabs');
-        this.data.agenda.forEach((day, index) => {
+        tabsContainer.innerHTML = '';
+
+        // Add Home Tab Button
+        const homeBtn = document.createElement('button');
+        homeBtn.className = 'tab active';
+        homeBtn.setAttribute('data-day', 'Home');
+        homeBtn.textContent = 'Home';
+        homeBtn.onclick = () => {
+            this.showHome();
+        };
+        tabsContainer.appendChild(homeBtn);
+
+        this.data.agenda.forEach((day) => {
             const btn = document.createElement('button');
-            btn.className = `tab ${index === 0 ? 'active' : ''}`;
+            btn.className = 'tab';
             btn.setAttribute('data-day', day.day);
             const dateLabel = this.formatDate(day.date);
             const cleanDay = day.day.replace(/\s+/g, ' ');
@@ -185,7 +201,8 @@ const app = {
                     card.style.cursor = 'default';
                 }
 
-                const room = session.room ? `<div class="room-tag">${session.room}</div>` : '';
+                const displayRoom = (session.room && session.room.trim()) ? session.room : '&nbsp;';
+                const room = `<div class="room-tag">${displayRoom}</div>`;
                 const paperCount = session.papers.length > 0 ? `<div class="paper-count">${session.papers.length} Papers</div>` : '';
 
                 card.innerHTML = `
@@ -223,8 +240,9 @@ const app = {
         const info = document.getElementById('session-info');
         const list = document.getElementById('paper-list');
 
+        const roomText = (session.room && session.room.trim()) ? `${session.room} | ` : '';
         info.innerHTML = `
-            <div class="room-tag">${session.room} | ${time}</div>
+            <div class="room-tag">${roomText}${time}</div>
             <h2 style="margin-bottom: 30px;">${session.title}</h2>
         `;
 
@@ -262,7 +280,8 @@ const app = {
         const dateLabel = meta ? this.formatDate(meta.date) : '';
         const cleanDay = meta ? meta.day.replace(/\s+/g, ' ') : '';
         const dayDisplay = dateLabel ? `${cleanDay} (${dateLabel})` : cleanDay;
-        const metaInfo = meta ? `<div class="search-meta" style="margin-bottom: 5px;">${dayDisplay} | ${meta.time} | ${meta.room}</div>` : '';
+        const roomText = (meta && meta.room && meta.room.trim()) ? ` | ${meta.room}` : '';
+        const metaInfo = meta ? `<div class="search-meta" style="margin-bottom: 5px;">${dayDisplay} | ${meta.time}${roomText}</div>` : '';
 
         info.innerHTML = `
             ${metaInfo}
@@ -325,7 +344,8 @@ const app = {
                 const dateLabel = meta ? this.formatDate(meta.date) : '';
                 const cleanDay = meta ? meta.day.replace(/\s+/g, ' ') : '';
                 const dayDisplay = dateLabel ? `${cleanDay} (${dateLabel})` : cleanDay;
-                const metaInfo = meta ? `<div class="search-meta">${dayDisplay} | ${meta.time} | ${meta.room}</div>` : '';
+                const roomText = (meta && meta.room && meta.room.trim()) ? ` | ${meta.room}` : '';
+                const metaInfo = meta ? `<div class="search-meta">${dayDisplay} | ${meta.time}${roomText}</div>` : '';
 
                 const speakerHtml = this.highlightText(paper.speaker, keywords);
                 const titleHtml = this.highlightText(paper.title, keywords);
@@ -348,6 +368,12 @@ const app = {
     showView(id) {
         document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
         document.getElementById(id).classList.remove('hidden');
+
+        const header = document.getElementById('app-header');
+        if (header) {
+            header.classList.remove('hidden');
+        }
+
         if (this.isInitialLoad) {
             window.scrollTo(0, 0);
             this.isInitialLoad = false;
@@ -358,9 +384,19 @@ const app = {
         }
     },
 
+    showHome(pushState = true) {
+        this.showView('home-view');
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        const homeTab = document.querySelector('.tab[data-day="Home"]');
+        if (homeTab) {
+            homeTab.classList.add('active');
+        }
+        if (pushState) history.pushState({ view: 'home' }, '');
+    },
+
     showAgenda(pushState = true) {
         this.showView('agenda-grid');
-        if (pushState) history.pushState(null, '');
+        if (pushState) history.pushState({ view: 'agenda' }, '');
     },
 
     backToSession() {
@@ -375,6 +411,10 @@ const app = {
         // Simple router logic
         if (view === 'paper') {
             this.showPaper(this.data.papers[id], pushState);
+        } else if (view === 'home') {
+            this.showHome(false);
+        } else if (view === 'agenda') {
+            this.showAgenda(false);
         }
     }
 };

@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EASSSR 2026 Program & Abstract Book Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ==========================================================================
+           1. 全域變數與主題設定 (CSS Variables for Themes)
+           這裡定義了三套高級主題的配色，藉由切換 class 即可一鍵換色，程式極簡好 Review！
+           ========================================================================== */
+        :root {
+            /* 預設主題：EASSSR Brand Theme (深藍紫與優雅粉紫，完美同步您 style.css 中的選色) */
+            --bg-color: #f1f5f9;
+            --page-bg: #ffffff;
+            --text-color: #0f172a;
+            --text-muted: #475569;
+            --primary-color: #271f66;
+            /* 網站主色：深藍紫色 */
+            --accent-color: #8d4287;
+            /* 網站輔色：優雅粉紫色 */
+            --accent-light: rgba(141, 66, 135, 0.08);
+            --border-color: #cbd5e1;
+            --card-bg: #f8fafc;
+        }
+
+        body.theme-morandi {
+            /* 莫蘭迪主題：東方禪意紫綠 (適合東亞宗教會議) */
+            --primary-color: #581c87;
+            /* 莫蘭迪深紫 */
+            --accent-color: #15803d;
+            /* 禪意灰草綠 */
+            --accent-light: rgba(21, 128, 61, 0.08);
+            --border-color: #e7e5e4;
+            --card-bg: #fafaf9;
+        }
+
+        body.theme-minimal {
+            /* 曜石極簡主題：經典黑白排版 (最省墨水、高對比) */
+            --primary-color: #000000;
+            /* 純黑 */
+            --accent-color: #4b5563;
+            /* 曜石灰 */
+            --accent-light: rgba(75, 85, 99, 0.08);
+            --border-color: #d1d5db;
+            --card-bg: #ffffff;
+        }
+
+        /* ==========================================================================
+           2. 網頁版基本排版 (Screen Styles - 僅在電腦瀏覽時顯示)
+           ========================================================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-top: 80px;
+            /* 避開頂端固定控制欄 */
+            transition: background-color 0.3s ease;
+        }
+
+        /* 控制面板樣式 (列印時會自動隱藏) */
+        .print-controls {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            z-index: 1000;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+        }
+
+        .controls-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .controls-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            background: white;
+            color: var(--text-color);
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-color);
+            filter: brightness(1.1);
+            color: white;
+        }
+
+        .theme-select {
+            display: flex;
+            gap: 8px;
+            background: #f1f5f9;
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .theme-dot {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: transform 0.2s;
+            position: relative;
+        }
+
+        .theme-dot:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-dot.active {
+            border-color: #0f172a;
+        }
+
+        /* 模擬 A4 紙張預覽 */
+        .book-container {
+            max-width: 210mm;
+            margin: 30px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .book-page {
+            width: 210mm;
+            min-height: 297mm;
+            background: var(--page-bg);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            padding: 25mm 20mm;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        /* ==========================================================================
+           3. 手冊結構視覺設計 (Book Content Styles)
+           ========================================================================== */
+
+        /* A. 封面頁 (Cover Page) 與 D. 封底頁 (Back Cover) */
+        #page-cover,
+        #page-end {
+            background-size: cover;
+            background-position: center;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            /* 確保圓角與背景圖邊界對齊 */
+        }
+
+        #page-cover {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            transition: background-image 0.3s ease;
+        }
+
+        #page-end {
+            display: none;
+            /* 由 JS 偵測到 end.png 後動態顯示 */
+        }
+
+        /* 封面背景實體圖片樣式 (保證在列印時不論是否勾選背景圖形皆能正常列印) */
+        .cover-img-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        /* 確保封面文字內容位於背景圖上層 */
+        #page-cover .cover-header,
+        #page-cover .cover-footer {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 預設無圖時的高雅漸層封面 */
+        #page-cover:not(.has-bg) {
+            background: linear-gradient(135deg, rgba(39, 31, 102, 0.03) 0%, rgba(141, 66, 135, 0.05) 100%), var(--page-bg);
+        }
+
+        .cover-header {
+            margin-top: 40mm;
+            transition: opacity 0.3s ease;
+        }
+
+        .cover-association {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-color);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .cover-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .cover-subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        .cover-divider {
+            width: 80px;
+            height: 3px;
+            background: var(--accent-color);
+            margin: 30px auto;
+        }
+
+        .cover-footer {
+            margin-bottom: 20mm;
+            transition: opacity 0.3s ease;
+        }
+
+        .cover-info {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        /* B. 議程大表頁 (Agenda Grid) */
+        .section-header {
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .section-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .agenda-day-block {
+            margin-bottom: 40px;
+            page-break-inside: avoid;
+        }
+
+        .agenda-day-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 12px;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 10px;
+        }
+
+        /* 全新配色與大表格排版 */
+        .agenda-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+        }
+
+        .agenda-table th,
+        .agenda-table td {
+            border: 1px solid var(--border-color);
+            padding: 12px 14px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .agenda-table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+
+        .table-time-col {
+            width: 110px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .agenda-session-box {
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+        }
+
+        .agenda-room-tag {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            background: var(--accent-light);
+            color: var(--accent-color);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .agenda-session-sub {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            white-space: pre-line;
+            line-height: 1.4;
+        }
+
+        /* C. 論文大綱冊頁 (Abstracts Book) */
+        .abstract-item {
+            page-break-inside: avoid;
+        }
+
+        .abstract-paper-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+
+        .abstract-author-info {
+            margin-bottom: 25px;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .abstract-speaker {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--accent-color);
+        }
+
+        .abstract-affiliation {
+            font-style: italic;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .abstract-content {
+            font-size: 0.95rem;
+            color: var(--text-color);
+            text-align: justify;
+            white-space: pre-line;
+            line-height: 1.65;
+            letter-spacing: 0.2px;
+        }
+
+        /* 頁尾頁碼效果 */
+        .page-footer-num {
+            position: absolute;
+            bottom: 15mm;
+            left: 20mm;
+            right: 20mm;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            padding-top: 8px;
+        }
+
+        /* ==========================================================================
+           TOC. 目錄頁專屬樣式 (Table of Contents Styles)
+           ========================================================================== */
+        .toc-page-content {
+            margin-top: 10mm;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .toc-session-block {
+            page-break-inside: avoid;
+        }
+
+        .toc-session-meta {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .toc-session-row {
+            display: flex;
+            align-items: baseline;
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 0.95rem;
+            margin-bottom: 6px;
+        }
+
+        .toc-session-title {
+            line-height: 1.3;
+        }
+
+        .toc-leader {
+            flex-grow: 1;
+            border-bottom: 1px dotted var(--border-color);
+            margin: 0 8px;
+            position: relative;
+            top: -4px;
+        }
+
+        .toc-page-number {
+            font-weight: 700;
+            color: var(--primary-color);
+            white-space: nowrap;
+        }
+
+        .toc-paper-list {
+            margin-left: 15px;
+            border-left: 1.5px solid var(--accent-light);
+            padding-left: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .toc-paper-item {
+            margin-bottom: 2px;
+        }
+
+        .toc-paper-title {
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-color);
+            line-height: 1.35;
+        }
+
+        .toc-paper-author {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-top: 1px;
+        }
+
+        /* 列印/PDF 匯出提示 Banner (螢幕上顯示，列印時隱藏) */
+        .print-tips-banner {
+            max-width: 210mm;
+            margin: 20px auto 0 auto;
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-left: 5px solid var(--accent-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            font-size: 0.9rem;
+            color: var(--text-color);
+            box-sizing: border-box;
+        }
+
+        .print-tips-banner h3 {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .print-tips-banner ol {
+            margin-left: 20px;
+            line-height: 1.6;
+        }
+
+        .print-tips-banner li {
+            margin-bottom: 4px;
+        }
+
+        .print-tips-banner strong {
+            color: var(--accent-color);
+        }
+
+        /* ==========================================================================
+           4. 列印專屬 CSS (@media print - 列印或另存 PDF 時的完美配置)
+           ========================================================================== */
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+                padding-top: 0 !important;
+            }
+
+            /* 核心：列印時絕對隱藏控制面板與提示 Banner */
+            .print-controls,
+            .print-tips-banner {
+                display: none !important;
+            }
+
+            .book-container {
+                display: block !important;
+                /* 解決 Chrome Flex 列印分頁與重疊 Bug，確保所有頁面循序垂直排列與分頁 */
+                margin: 0 !important;
+                max-width: 100% !important;
+                gap: 0 !important;
+            }
+
+            #agenda-pages-target,
+            #toc-pages-target,
+            #abstracts-pages-target {
+                display: block !important;
+            }
+
+            .book-page {
+                width: 210mm !important;
+                /* 強制設定 A4 標準寬度，杜絕跑版 */
+                min-height: 297mm !important;
+                /* 改用 min-height，容許內容稍多時自然伸展，防範瀏覽器因排版過擠而將頁面裁切或丟棄！ */
+                margin: 0 !important;
+                padding: 25mm 20mm !important;
+                /* 完美同步網頁預覽版精細邊距 */
+                box-shadow: none !important;
+                border: none !important;
+                page-break-after: always;
+                /* 強制換頁 */
+                page-break-inside: auto !important;
+                /* 允許超長頁面（如日程大表）在極端情況下跨頁，避免因避免分割而導致整頁被瀏覽器隱藏消失 */
+                background: white !important;
+                box-sizing: border-box !important;
+                position: relative !important;
+            }
+
+            /* ==========================================================================
+               列印緊湊排版調優：確保議程與論文摘要不跨頁、不截斷，極致對齊 A4 物理邊界
+               ========================================================================== */
+
+            /* 1. 議程大表與目錄頁面 (Schedule & TOC Pages) 列印精細緊湊度優化 */
+            #agenda-pages-target .book-page,
+            #toc-pages-target .book-page {
+                padding: 12mm 15mm 15mm 15mm !important;
+                /* 縮減邊距，增加內部可用空間 */
+            }
+
+            #agenda-pages-target .section-header,
+            #toc-pages-target .section-header {
+                margin-bottom: 12px !important;
+                padding-bottom: 6px !important;
+            }
+
+            #agenda-pages-target .agenda-day-title {
+                margin-bottom: 8px !important;
+                font-size: 1.1rem !important;
+            }
+
+            #agenda-pages-target .agenda-table {
+                font-size: 0.72rem !important;
+                /* 微縮字體 */
+                margin-bottom: 0 !important;
+            }
+
+            #agenda-pages-target .agenda-table th,
+            #agenda-pages-target .agenda-table td {
+                padding: 5px 8px !important;
+                /* 大幅縮小儲存格內邊距，節省大量高度 */
+                line-height: 1.3 !important;
+            }
+
+            #agenda-pages-target .agenda-room-tag {
+                padding: 1px 4px !important;
+                font-size: 0.6rem !important;
+                margin-bottom: 3px !important;
+            }
+
+            #agenda-pages-target .agenda-session-box {
+                font-size: 0.78rem !important;
+                margin-bottom: 3px !important;
+                line-height: 1.3 !important;
+            }
+
+            #agenda-pages-target .agenda-session-sub {
+                font-size: 0.68rem !important;
+                line-height: 1.25 !important;
+            }
+
+            #agenda-pages-target .agenda-day-block {
+                margin-bottom: 0 !important;
+            }
+
+            #toc-pages-target .toc-page-content {
+                margin-top: 0 !important;
+            }
+
+            /* 2. 論文摘要頁面 (Abstract Pages) 列印緊湊度優化：保證字數較多的摘要不會溢出到第二頁 */
+            #abstracts-pages-target .book-page {
+                padding: 15mm 15mm !important;
+            }
+
+            #abstracts-pages-target .section-header {
+                margin-bottom: 10px !important;
+            }
+
+            #abstracts-pages-target .abstract-paper-title {
+                font-size: 1.2rem !important;
+                margin-top: 5mm !important;
+                margin-bottom: 8px !important;
+                line-height: 1.35 !important;
+            }
+
+            #abstracts-pages-target .abstract-author-info {
+                margin-bottom: 15px !important;
+            }
+
+            #abstracts-pages-target .abstract-content {
+                font-size: 0.88rem !important;
+                /* 微調內文字型大小 */
+                line-height: 1.5 !important;
+                /* 微調行高 */
+            }
+
+            #page-cover,
+            #page-end {
+                border: none !important;
+            }
+
+            /* 設定 A4 列印邊距為 0，避免瀏覽器預設頁首尾干擾，邊界由 .book-page padding 控制 */
+            @page {
+                size: A4;
+                margin: 0;
+            }
+
+            /* 確保背景圖與色彩能被列印出來 */
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ==========================================================================
+       1. 網頁版頂端控制面板 (Print Controls - 僅在網頁顯示，列印時自動隱藏)
+       ========================================================================== -->
+    <div class="print-controls">
+        <div class="controls-title">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                style="color:var(--primary-color)">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+            EASSSR 2026 Program Book & PDF Generator
+        </div>
+        <div class="controls-group">
+            <!-- 高級配色主題選擇 -->
+            <div class="theme-select" title="Switch Color Themes">
+                <!-- EASSSR Brand Purple -->
+                <div class="theme-dot active" style="background:#271f66;" onclick="switchTheme('navy', this)"></div>
+                <!-- Morandi Plum -->
+                <div class="theme-dot" style="background:#581c87;" onclick="switchTheme('morandi', this)"></div>
+                <!-- Charcoal Minimal -->
+                <div class="theme-dot" style="background:#000000;" onclick="switchTheme('minimal', this)"></div>
+            </div>
+
+            <!-- 封面圖片上傳按鈕 -->
+            <label class="btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                    <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+                Upload Cover
+                <input type="file" id="cover-uploader" accept="image/*" style="display:none">
+            </label>
+            <button class="btn" id="btn-clear-cover" style="display:none;" onclick="clearCover()">Clear Cover</button>
+
+            <!-- 列印 / 匯出 PDF 按鈕 -->
+            <button class="btn btn-primary" onclick="window.print()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                    <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                    <rect x="6" y="14" width="12" height="8"></rect>
+                </svg>
+                Print / Save as PDF
+            </button>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+       2. 匯出 PDF/列印完美指南 (僅在瀏覽網頁時顯示)
+       ========================================================================== -->
+    <!-- <div class="print-tips-banner">
+        <h3>💡 匯出 A4 PDF 與列印完美排版指南 (A4 PDF Export & Print Guide)</h3>
+        <ol>
+            <li><strong>設定邊距為「無」</strong>：在瀏覽器的列印視窗中，請將<strong>「邊距 (Margins)」</strong>設為<strong>「無 (None)」</strong>，以確保每一頁都精準貼合 A4 物理大小，並自動隱藏網頁標題與網址。</li>
+            <li><strong>啟用背景圖形</strong>：請務必勾選<strong>「背景圖形 (Background graphics)」</strong>，否則精緻表格配色、封面背景圖等將無法顯示。</li>
+            <li><strong>紙張大小設定</strong>：請確保<strong>「紙張大小 (Paper size)」</strong>已設定為 <strong>A4</strong>，並且「比例 (Scale)」設為 <strong>100% / 預設</strong>。</li>
+        </ol>
+    </div> -->
+
+    <!-- ==========================================================================
+       3. 會議手冊 A4 卡片容器 (Book Container)
+       ========================================================================== -->
+    <div class="book-container">
+
+        <!-- A. 封面頁 (Cover Page) - Page 1 -->
+        <div class="book-page" id="page-cover">
+            <!-- 實體背景圖片，確保不論瀏覽器列印設定的「背景圖形」開關與否，封面大圖皆能百分之百成功印出 -->
+            <img id="cover-img" src="" alt="Cover Image" class="cover-img-background" style="display: none;">
+            <div class="cover-header">
+                <div class="cover-association">EASSSR 2026</div>
+                <div class="cover-title">East Asian Society for the<br>Scientific Study of Religion</div>
+                <div class="cover-divider"></div>
+                <div class="cover-subtitle">Annual Conference Program & Abstract Book</div>
+            </div>
+            <div class="cover-footer">
+                <div class="cover-info" style="font-weight:700;">Conference Date: July 1st - July 4th, 2026</div>
+                <div class="cover-info">Venue: Fo Guang Shan, Kaohsiung, Taiwan</div>
+                <div class="cover-info" style="font-size:0.75rem; color:#94a3b8; margin-top:20px; font-weight:normal;"
+                    id="cover-tip">
+                    [ Cover Image Placeholder - Click "Upload Cover" in the top bar to set your customized cover ]
+                </div>
+            </div>
+        </div>
+
+        <!-- 封面後的白頁 (Blank page after Cover) -->
+        <div class="book-page" id="page-blank-after-cover"></div>
+
+        <!-- B. 議程大表頁面容器 (Agenda Pages Container) - Days will be rendered as separate pages starting from Page 2 -->
+        <div id="agenda-pages-target"></div>
+
+        <!-- TOC. 目錄頁面容器 (Table of Contents Container) -->
+        <div id="toc-pages-target"></div>
+
+        <!-- C. 論文大綱頁面容器 (Abstracts Container) -->
+        <!-- JS 會動態將論文摘要分成多頁，並在此容器後追加渲染 -->
+        <div id="abstracts-pages-target"></div>
+
+        <!-- 封底前的白頁 (Blank page before Back Cover) -->
+        <div class="book-page" id="page-blank-before-end" style="display: none;"></div>
+
+        <!-- D. 封底頁 (Back Cover Page) - 會在所有內容最後顯示 -->
+        <div class="book-page" id="page-end" style="position: relative;">
+            <img id="end-img" src="" alt="Back Cover Image" class="cover-img-background" style="display: none;">
+        </div>
+
+    </div>
+
+    <!-- ==========================================================================
+       3. 動態渲染與互動邏輯 (JavaScript)
+       ========================================================================== */ -->
+    <script>
+        let agendaData = null;
+
+        // 初始化載入
+        async function init() {
+            try {
+                const coverImg = document.getElementById('cover-img');
+                const coverPage = document.getElementById('page-cover');
+                const clearBtn = document.getElementById('btn-clear-cover');
+
+                function applyCoverImage(src) {
+                    coverImg.src = src;
+                    coverImg.style.display = 'block';
+                    coverPage.style.backgroundImage = `url('${src}')`;
+                    coverPage.classList.add('has-bg');
+                    // 隱藏封面預設的文字以秀出完整不變形背景圖
+                    coverPage.querySelectorAll('.cover-header, .cover-footer').forEach(el => el.style.opacity = '0');
+                    document.getElementById('btn-clear-cover').style.display = 'inline-flex';
+                }
+
+                // 自動檢測並套用封面圖片 (優先使用 cover.png，其次為 cover.jpg)
+                const coverPngTest = new Image();
+                coverPngTest.src = 'cover.png';
+                coverPngTest.onload = function () {
+                    applyCoverImage('cover.png');
+                };
+                coverPngTest.onerror = function () {
+                    const coverJpgTest = new Image();
+                    coverJpgTest.src = 'cover.jpg';
+                    coverJpgTest.onload = function () {
+                        applyCoverImage('cover.jpg');
+                    };
+                    coverJpgTest.onerror = function () {
+                        // 若皆無，則使用預設的高雅漸層與文字封面
+                        console.log("No custom cover.png or cover.jpg found, using fallback HTML layout.");
+                    };
+                };
+
+                // 自動檢測並顯示封底與其前白頁面 (使用 end.png)
+                const endTest = new Image();
+                endTest.src = 'end.png';
+                endTest.onload = function () {
+                    const endPage = document.getElementById('page-end');
+                    const endImg = document.getElementById('end-img');
+                    const blankBeforeEnd = document.getElementById('page-blank-before-end');
+                    endImg.src = 'end.png';
+                    endImg.style.display = 'block';
+                    endPage.style.display = 'block';
+                    if (blankBeforeEnd) {
+                        blankBeforeEnd.style.display = 'block';
+                    }
+                };
+                endTest.onerror = function () {
+                    console.log("No end.png back cover found, skipping back cover page.");
+                };
+
+                // 重點：因為本檔案在 for pdf/ 資料夾下，需往上一層讀取 agenda_data.json
+                const response = await fetch('../agenda_data.json');
+                agendaData = await response.json();
+
+                // 1. Render schedule tables (returns starting page for TOC)
+                const startTocPageNum = renderAgendaTables();
+
+                // 2. Pre-calculate abstract page offsets
+                const offsets = calculateAbstractPageOffsets();
+
+                // 3. Extract all sessions with papers
+                const sessionsWithPapers = [];
+                agendaData.agenda.forEach(day => {
+                    day.slots.forEach(slot => {
+                        slot.sessions.forEach(session => {
+                            const activePapers = session.papers ? session.papers.filter(pid => {
+                                const paper = agendaData.papers[pid];
+                                return paper && !paper.deprecated;
+                            }) : [];
+
+                            if (activePapers.length > 0) {
+                                sessionsWithPapers.push({
+                                    key: `${day.day}_${slot.time}_${session.room}`,
+                                    day: day.day,
+                                    time: slot.time,
+                                    room: session.room,
+                                    title: session.title,
+                                    papers: activePapers
+                                });
+                            }
+                        });
+                    });
+                });
+
+                // 4. Partition sessions into TOC pages
+                const tocPages = partitionSessionsIntoPages(sessionsWithPapers);
+                const numTocPages = tocPages.length;
+
+                // 5. Render TOC pages
+                renderTOC(startTocPageNum, offsets.paperOffsets, offsets.sessionOffsets, offsets.totalAbstractPages, tocPages);
+
+                // 6. Render Abstract Book pages (starts after TOC pages)
+                const startAbstractPageNum = startTocPageNum + numTocPages;
+                renderAbstractBook(startAbstractPageNum);
+
+                setupCoverUploader();
+            } catch (error) {
+                console.error("Failed to load agenda data:", error);
+            }
+        }
+
+        // 預先計算摘要大綱分頁偏移量 (動態分頁預估)
+        function calculateAbstractPageOffsets() {
+            let currentOffset = 0;
+            const offsets = {
+                paperOffsets: {}, // pid -> offset from start of abstracts
+                sessionOffsets: {}, // sessionKey -> offset of its first paper
+            };
+
+            agendaData.agenda.forEach(day => {
+                day.slots.forEach(slot => {
+                    slot.sessions.forEach(session => {
+                        if (session.papers && session.papers.length > 0) {
+                            let firstPaperOffset = null;
+                            session.papers.forEach(pid => {
+                                const paper = agendaData.papers[pid];
+                                if (paper && !paper.deprecated) {
+                                    if (firstPaperOffset === null) {
+                                        firstPaperOffset = currentOffset;
+                                    }
+                                    offsets.paperOffsets[pid] = currentOffset;
+
+                                    const cleanAbstract = paper.abstract ? paper.abstract.replace(/_x000D_\n/g, '\n').replace(/_x000D_/g, '\n') : '';
+                                    if (cleanAbstract.length > 3000) {
+                                        currentOffset += 2;
+                                    } else {
+                                        currentOffset += 1;
+                                    }
+                                }
+                            });
+                            if (firstPaperOffset !== null) {
+                                const sessionKey = `${day.day}_${slot.time}_${session.room}`;
+                                offsets.sessionOffsets[sessionKey] = firstPaperOffset;
+                            }
+                        }
+                    });
+                });
+            });
+
+            offsets.totalAbstractPages = currentOffset;
+            return offsets;
+        }
+
+        // 將 TOC 排版內容以「行/項目」為單位進行細緻的分頁，以極大化每頁利用率（每頁上限約 28 單位，第一頁為 22 單位）
+        function partitionSessionsIntoPages(sessions) {
+            const pages = [];
+            let currentPage = [];
+            let currentWeight = 0;
+
+            sessions.forEach(session => {
+                const headerWeight = 2; // Session 標題與資訊佔 2 單位
+                const maxWeightForCurrentHeader = (pages.length === 0) ? 31 : 31;
+
+                if (currentWeight + headerWeight > maxWeightForCurrentHeader && currentPage.length > 0) {
+                    pages.push(currentPage);
+                    currentPage = [];
+                    currentWeight = 0;
+                }
+
+                currentPage.push({
+                    type: 'session_header',
+                    session: session
+                });
+                currentWeight += headerWeight;
+
+                session.papers.forEach(pid => {
+                    const paperWeight = 2; // 每篇論文（標題+作者）佔 2 單位
+                    const maxWeightForCurrentPaper = (pages.length === 0) ? 31 : 31;
+
+                    if (currentWeight + paperWeight > maxWeightForCurrentPaper && currentPage.length > 0) {
+                        pages.push(currentPage);
+                        currentPage = [];
+                        currentWeight = 0;
+                    }
+
+                    currentPage.push({
+                        type: 'paper',
+                        pid: pid,
+                        session: session
+                    });
+                    currentWeight += paperWeight;
+                });
+            });
+
+            if (currentPage.length > 0) {
+                pages.push(currentPage);
+            }
+
+            return pages;
+        }
+
+        // 渲染目錄頁面 (TOC) 到指定的 DOM 容器中
+        function renderTOC(startPageNum, paperOffsets, sessionOffsets, totalAbstractPages, tocPages) {
+            const target = document.getElementById('toc-pages-target');
+            target.innerHTML = '';
+
+            let currentPageNum = startPageNum;
+            const numTocPages = tocPages.length;
+            const abstractsStartPage = startPageNum + numTocPages;
+
+            tocPages.forEach((pageItems, pageIndex) => {
+                const pageEl = document.createElement('div');
+                pageEl.className = 'book-page';
+                pageEl.id = `toc-page-${pageIndex + 1}`;
+
+                // 精緻的目錄頁面標題列
+                const sectionHeader = document.createElement('div');
+                sectionHeader.className = 'section-header';
+                sectionHeader.innerHTML = `
+                    <div class="section-title">Table of Contents</div>
+                    <div class="section-subtitle">${pageIndex === 0 ? 'Overview' : 'Continued'}</div>
+                `;
+                pageEl.appendChild(sectionHeader);
+
+                // 目錄內容區塊
+                const contentEl = document.createElement('div');
+                contentEl.className = 'toc-page-content';
+
+                let currentPaperList = null;
+
+                pageItems.forEach(item => {
+                    if (item.type === 'session_header') {
+                        const session = item.session;
+                        const sessionKey = session.key;
+                        const sessionPageNum = abstractsStartPage + sessionOffsets[sessionKey];
+
+                        const sessionBlock = document.createElement('div');
+                        sessionBlock.className = 'toc-session-block';
+
+                        const metaEl = document.createElement('div');
+                        metaEl.className = 'toc-session-meta';
+                        metaEl.textContent = `${session.day} | ${session.time} | ${session.room}`;
+                        sessionBlock.appendChild(metaEl);
+
+                        const rowEl = document.createElement('div');
+                        rowEl.className = 'toc-session-row';
+                        rowEl.innerHTML = `
+                            <span class="toc-session-title">${session.title.split('\n')[0]}</span>
+                            <span class="toc-leader"></span>
+                            <span class="toc-page-number">Page ${sessionPageNum}</span>
+                        `;
+                        sessionBlock.appendChild(rowEl);
+
+                        const paperListEl = document.createElement('div');
+                        paperListEl.className = 'toc-paper-list';
+                        sessionBlock.appendChild(paperListEl);
+
+                        contentEl.appendChild(sessionBlock);
+                        currentPaperList = paperListEl;
+                    } else if (item.type === 'paper') {
+                        const paper = agendaData.papers[item.pid];
+                        if (paper && !paper.deprecated) {
+                            if (!currentPaperList) {
+                                // 跨頁延續：如果本頁開頭就是論文，建立一個獨立的論文清單容器
+                                const standaloneList = document.createElement('div');
+                                standaloneList.className = 'toc-paper-list';
+                                standaloneList.style.marginTop = '10px';
+                                contentEl.appendChild(standaloneList);
+                                currentPaperList = standaloneList;
+                            }
+
+                            const paperItem = document.createElement('div');
+                            paperItem.className = 'toc-paper-item';
+                            paperItem.innerHTML = `
+                                <div class="toc-paper-title">${paper.title}</div>
+                                <div class="toc-paper-author">${paper.speaker}</div>
+                            `;
+                            currentPaperList.appendChild(paperItem);
+                        }
+                    }
+                });
+
+                pageEl.appendChild(contentEl);
+
+                // 頁碼頁尾
+                const footer = document.createElement('div');
+                footer.className = 'page-footer-num';
+                footer.innerHTML = `
+                    <span>EASSSR 2026 Table of Contents</span>
+                    <span>Page ${currentPageNum}</span>
+                `;
+                pageEl.appendChild(footer);
+
+                target.appendChild(pageEl);
+                currentPageNum++;
+            });
+        }
+
+        // 切換主題
+        function switchTheme(theme, element) {
+            document.body.className = '';
+            if (theme !== 'navy') {
+                document.body.classList.add('theme-' + theme);
+            }
+
+            document.querySelectorAll('.theme-dot').forEach(dot => dot.classList.remove('active'));
+            element.classList.add('active');
+        }
+
+        // 封面圖片自訂上傳
+        function setupCoverUploader() {
+            const uploader = document.getElementById('cover-uploader');
+            const coverPage = document.getElementById('page-cover');
+            const clearBtn = document.getElementById('btn-clear-cover');
+
+            uploader.onchange = function (e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (event) {
+                        const coverImg = document.getElementById('cover-img');
+                        coverImg.src = event.target.result;
+                        coverImg.style.display = 'block';
+                        coverPage.style.backgroundImage = `url('${event.target.result}')`;
+                        coverPage.classList.add('has-bg');
+                        coverPage.querySelectorAll('.cover-header, .cover-footer').forEach(el => el.style.opacity = '0');
+                        clearBtn.style.display = 'inline-flex';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+        }
+
+        // 清空自訂封面
+        function clearCover() {
+            const coverPage = document.getElementById('page-cover');
+            const coverImg = document.getElementById('cover-img');
+            const clearBtn = document.getElementById('btn-clear-cover');
+            const uploader = document.getElementById('cover-uploader');
+
+            coverImg.src = '';
+            coverImg.style.display = 'none';
+            coverPage.style.backgroundImage = '';
+            coverPage.classList.remove('has-bg');
+            coverPage.querySelectorAll('.cover-header, .cover-footer').forEach(el => el.style.opacity = '1');
+            clearBtn.style.display = 'none';
+            uploader.value = '';
+        }
+
+        // 格式化日期
+        function formatDate(dateStr) {
+            if (!dateStr) return "";
+            const parts = dateStr.split('-');
+            const month = parseInt(parts[1], 10);
+            const day = parseInt(parts[2], 10);
+            const months = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            return `${months[month]} ${day}`;
+        }
+
+        // 1. 動態渲染：全新配色的議程表格 (Agenda Tables) - Day 3 & Day 4 合併於同一頁，其餘各天單獨成頁
+        function renderAgendaTables() {
+            const target = document.getElementById('agenda-pages-target');
+            target.innerHTML = '';
+            let pageNum = 3; // 封面第一頁，白頁第二頁，議程第三頁開始
+            let lastPageEl = null;
+
+            agendaData.agenda.forEach((day, index) => {
+                // 如果是 Day 4 (index === 3)，我們將其附加到 Day 3 (index === 2) 的頁面上
+                let pageEl;
+                if (index === 3 && lastPageEl) {
+                    pageEl = lastPageEl;
+                } else {
+                    pageEl = document.createElement('div');
+                    pageEl.className = 'book-page';
+
+                    // 精緻的頁面標題列
+                    const sectionHeader = document.createElement('div');
+                    sectionHeader.className = 'section-header';
+                    sectionHeader.innerHTML = `
+                        <div class="section-title">Conference Schedule</div>
+                        <div class="section-subtitle">${index === 2 ? 'Day 3 & Day 4' : day.day} Overview</div>
+                    `;
+                    pageEl.appendChild(sectionHeader);
+                    lastPageEl = pageEl;
+                }
+
+                // 議程區塊
+                const block = document.createElement('div');
+                block.className = 'agenda-day-block';
+                if (index === 3) {
+                    // Day 4 加入與前一個區塊的間距
+                    block.style.marginTop = '25px';
+                }
+
+                const dateLabel = formatDate(day.date);
+                const dayTitle = document.createElement('div');
+                dayTitle.className = 'agenda-day-title';
+                dayTitle.textContent = `${day.day} (${dateLabel})`;
+                block.appendChild(dayTitle);
+
+                const table = document.createElement('table');
+                table.className = 'agenda-table';
+                table.innerHTML = `<thead><tr><th style="width: 15%;">Time</th><th style="width: 28.3%;"></th><th style="width: 28.3%;"></th><th style="width: 28.3%;"></th></tr></thead><tbody></tbody>`;
+
+                const tbody = table.querySelector('tbody');
+
+                day.slots.forEach(slot => {
+                    const row = document.createElement('tr');
+                    const timeTd = document.createElement('td');
+                    timeTd.className = 'table-time-col';
+                    timeTd.textContent = slot.time;
+                    row.appendChild(timeTd);
+
+                    // 判斷是否為單一大行程（如 Lunch, Break, Tour, Dinner, Plenary, Meal, Offering, Keynote 等大行程，或未指定 Room 的行程）
+                    let isSingleFullSession = false;
+                    if (slot.sessions.length === 1) {
+                        const session = slot.sessions[0];
+                        const room = (session.room || '').trim();
+                        const titleLower = (session.title || '').toLowerCase();
+                        if (room === '' ||
+                            titleLower.includes('lunch') ||
+                            titleLower.includes('break') ||
+                            titleLower.includes('tour') ||
+                            titleLower.includes('dinner') ||
+                            titleLower.includes('reception') ||
+                            titleLower.includes('ceremony') ||
+                            titleLower.includes('plenary') ||
+                            titleLower.includes('registration') ||
+                            titleLower.includes('opening') ||
+                            titleLower.includes('farewell') ||
+                            titleLower.includes('departure') ||
+                            titleLower.includes('meal') ||
+                            titleLower.includes('offering') ||
+                            titleLower.includes('keynote') ||
+                            titleLower.includes('presidential') ||
+                            titleLower.includes('address') ||
+                            titleLower.includes('video') ||
+                            titleLower.includes('appreciation') ||
+                            titleLower.includes('introduction') ||
+                            titleLower.includes('foguang') ||
+                            titleLower.includes('fo guang')) {
+                            isSingleFullSession = true;
+                        }
+                    }
+
+                    if (isSingleFullSession) {
+                        timeTd.style.verticalAlign = 'middle';
+                        const session = slot.sessions[0];
+                        const td = document.createElement('td');
+                        td.setAttribute('colspan', '3');
+                        td.style.textAlign = 'center';
+                        td.style.background = 'var(--card-bg)';
+                        td.style.verticalAlign = 'middle';
+
+                        const titleParts = session.title.split('\n');
+                        const displayTitle = titleParts[0];
+                        const subInfo = titleParts.slice(1).join(' | ');
+                        const subMarkup = subInfo ? `<div class="agenda-session-sub" style="margin-top:2px;">${subInfo}</div>` : '';
+
+                        // 凡是三格寬的行程都拿掉 room name！這裡不包含 roomMarkup
+                        td.innerHTML = `
+                            <div class="agenda-session-box" style="margin-bottom:0; color:var(--primary-color);">${displayTitle}</div>
+                            ${subMarkup}
+                        `;
+                        row.appendChild(td);
+                    } else {
+                        const rooms = ['Room A', 'Room B', 'Room C'];
+                        rooms.forEach(roomName => {
+                            const td = document.createElement('td');
+                            const session = slot.sessions.find(s => s.room === roomName);
+
+                            if (session) {
+                                const titleParts = session.title.split('\n');
+                                const displayTitle = titleParts[0];
+                                const subInfo = titleParts.slice(1).join(' | ');
+                                const subMarkup = subInfo ? `<div class="agenda-session-sub">${subInfo}</div>` : '';
+                                const paperCountMarkup = session.papers && session.papers.length > 0 ? `<div class="agenda-session-sub" style="font-weight:600; color:var(--accent-color); margin-top:4px;">${session.papers.length} Papers</div>` : '';
+
+                                td.innerHTML = `
+                                    <div class="agenda-room-tag">${roomName}</div>
+                                    <div class="agenda-session-box">${displayTitle}</div>
+                                    ${subMarkup}
+                                    ${paperCountMarkup}
+                                `;
+                            } else {
+                                td.innerHTML = `<span style="color:#cbd5e1; font-style:italic;">No Session</span>`;
+                            }
+                            row.appendChild(td);
+                        });
+                    }
+                    tbody.appendChild(row);
+                });
+
+                block.appendChild(table);
+                pageEl.appendChild(block);
+
+                // 為每張 A4 議程頁面加入絕對定位頁尾頁碼 (Day 3 等待 Day 4 塞入後才加入頁尾與寫入 DOM)
+                if (index !== 2) {
+                    const footer = document.createElement('div');
+                    footer.className = 'page-footer-num';
+                    footer.innerHTML = `
+                        <span>EASSSR 2026 Conference Program</span>
+                        <span>Page ${pageNum}</span>
+                    `;
+                    pageEl.appendChild(footer);
+
+                    target.appendChild(pageEl);
+                    pageNum++;
+                }
+            });
+
+            return pageNum; // 回傳下一個可用的頁碼給論文摘要冊使用
+        }
+
+        // 2. 動態渲染：論文大綱冊 (Abstract Book) - 調整為一頁一篇大氣排版，頁碼承接議程大表後續
+        function renderAbstractBook(startPageNum) {
+            const target = document.getElementById('abstracts-pages-target');
+            target.innerHTML = '';
+            let currentPageNum = startPageNum;
+
+            agendaData.agenda.forEach(day => {
+                const dateLabel = formatDate(day.date);
+                day.slots.forEach(slot => {
+                    slot.sessions.forEach(session => {
+                        if (session.papers && session.papers.length > 0) {
+                            session.papers.forEach(pid => {
+                                const paper = agendaData.papers[pid];
+                                if (paper && !paper.deprecated) {
+                                    const cleanAbstract = paper.abstract ? paper.abstract.replace(/_x000D_\n/g, '\n').replace(/_x000D_/g, '\n') : '';
+
+                                    // 如果摘要太長（超過1600個字），則自動切割成兩頁，以避免列印時跑版或截斷
+                                    if (cleanAbstract.length > 3000) {
+                                        let paragraphs = cleanAbstract.split('\n');
+                                        if (paragraphs.length === 1) {
+                                            const mid = Math.floor(cleanAbstract.length / 2);
+                                            const spaceIndex = cleanAbstract.indexOf(' ', mid);
+                                            if (spaceIndex !== -1) {
+                                                paragraphs = [
+                                                    cleanAbstract.substring(0, spaceIndex),
+                                                    cleanAbstract.substring(spaceIndex + 1)
+                                                ];
+                                            } else {
+                                                paragraphs = [
+                                                    cleanAbstract.substring(0, mid),
+                                                    cleanAbstract.substring(mid)
+                                                ];
+                                            }
+                                        }
+
+                                        let part1 = [];
+                                        let part2 = [];
+                                        let currentLength = 0;
+
+                                        paragraphs.forEach(para => {
+                                            if (currentLength < cleanAbstract.length / 2 || currentLength < 1000) {
+                                                part1.push(para);
+                                                currentLength += para.length + 1;
+                                            } else {
+                                                part2.push(para);
+                                            }
+                                        });
+
+                                        const textPart1 = part1.join('\n');
+                                        const textPart2 = part2.join('\n');
+
+                                        // 第一頁：包含論文標題、作者/Speaker、單位，以及前半段內文
+                                        const pageEl1 = createNewAbstractPage(currentPageNum, session, day, dateLabel, slot.time);
+                                        const pageContentArea1 = pageEl1.querySelector('.abstracts-page-content');
+                                        const item1 = document.createElement('div');
+                                        item1.className = 'abstract-item';
+                                        item1.innerHTML = `
+                                            <div class="abstract-paper-title" style="font-size: 1.35rem; margin-top: 15mm; margin-bottom: 12px; line-height: 1.4; color: var(--primary-color); font-weight: 700;">${paper.title}</div>
+                                            <div class="abstract-author-info" style="margin-bottom: 25px; display: flex; align-items: baseline; gap: 8px;">
+                                                <span class="abstract-speaker" style="font-size: 1.1rem; font-weight: 700; color: var(--accent-color);">${paper.speaker}</span>
+                                                <span class="abstract-affiliation" style="font-size: 0.9rem; font-style: italic; color: var(--text-muted);">${paper.affiliation || ''}</span>
+                                            </div>
+                                            <div class="abstract-content" style="font-size: 0.95rem; line-height: 1.65; text-align: justify; color: var(--text-color); font-weight: 400; letter-spacing: 0.2px;">${textPart1}</div>
+                                        `;
+                                        pageContentArea1.appendChild(item1);
+                                        target.appendChild(pageEl1);
+                                        currentPageNum++;
+
+                                        // 第二頁：包含相同的議程導航標題與橫線，但沒有標題與作者，僅顯示後半段內文
+                                        const pageEl2 = createNewAbstractPage(currentPageNum, session, day, dateLabel, slot.time);
+                                        const pageContentArea2 = pageEl2.querySelector('.abstracts-page-content');
+                                        const item2 = document.createElement('div');
+                                        item2.className = 'abstract-item';
+                                        item2.innerHTML = `
+                                            <div class="abstract-content" style="font-size: 0.95rem; line-height: 1.65; text-align: justify; color: var(--text-color); font-weight: 400; letter-spacing: 0.2px; margin-top: 15mm;">${textPart2}</div>
+                                        `;
+                                        pageContentArea2.appendChild(item2);
+                                        target.appendChild(pageEl2);
+                                        currentPageNum++;
+                                    } else {
+                                        // 普通長度的論文：單頁完整呈現
+                                        const pageEl = createNewAbstractPage(currentPageNum, session, day, dateLabel, slot.time);
+                                        const pageContentArea = pageEl.querySelector('.abstracts-page-content');
+                                        const item = document.createElement('div');
+                                        item.className = 'abstract-item';
+                                        item.innerHTML = `
+                                            <div class="abstract-paper-title" style="font-size: 1.35rem; margin-top: 15mm; margin-bottom: 12px; line-height: 1.4; color: var(--primary-color); font-weight: 700;">${paper.title}</div>
+                                            <div class="abstract-author-info" style="margin-bottom: 25px; display: flex; align-items: baseline; gap: 8px;">
+                                                <span class="abstract-speaker" style="font-size: 1.1rem; font-weight: 700; color: var(--accent-color);">${paper.speaker}</span>
+                                                <span class="abstract-affiliation" style="font-size: 0.9rem; font-style: italic; color: var(--text-muted);">${paper.affiliation || ''}</span>
+                                            </div>
+                                            <div class="abstract-content" style="font-size: 0.95rem; line-height: 1.65; text-align: justify; color: var(--text-color); font-weight: 400; letter-spacing: 0.2px;">${cleanAbstract}</div>
+                                        `;
+                                        pageContentArea.appendChild(item);
+                                        target.appendChild(pageEl);
+                                        currentPageNum++;
+                                    }
+                                }
+                            });
+                        }
+                    });
+                });
+            });
+        }
+
+        // 輔育建立新頁面，並在上方顯示該篇論文所屬的 Session 等詳細導航資訊
+        function createNewAbstractPage(pageNum, session, day, dateLabel, timeSlot) {
+            const page = document.createElement('div');
+            page.className = 'book-page';
+            const sessionTitle = session.title.split('\n')[0];
+            const roomMeta = (session.room && session.room.trim() !== '') ? ` | ${session.room}` : '';
+
+            page.innerHTML = `
+                <div class="section-header" style="margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; display: flex; justify-content: space-between; align-items: flex-end;">
+                    <div class="section-title" style="font-size: 1rem; color: var(--primary-color); font-weight: 600;"></div>
+                    <div class="section-subtitle" style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500; text-align: right;">
+                        ${day.day} (${dateLabel}) | ${timeSlot}${roomMeta} | Session: ${sessionTitle}
+                    </div>
+                </div>
+                <div class="abstracts-page-content"></div>
+                <div class="page-footer-num" style="position: absolute; bottom: 15mm; left: 20mm; right: 20mm; display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); border-top: 1px solid var(--border-color); padding-top: 8px;">
+                    <span>EASSSR 2026 Abstracts</span>
+                    <span>Page ${pageNum}</span>
+                </div>
+            `;
+            return page;
+        }
+
+        window.onload = init;
+    </script>
+</body>
+
+</html>
