@@ -1230,6 +1230,7 @@
                         const room = (session.room || '').trim();
                         const titleLower = (session.title || '').toLowerCase();
                         if (room === '' ||
+                            !['room a', 'room b', 'room c'].includes(room.toLowerCase()) ||
                             titleLower.includes('lunch') ||
                             titleLower.includes('break') ||
                             titleLower.includes('tour') ||
@@ -1264,16 +1265,80 @@
                         td.style.background = 'var(--card-bg)';
                         td.style.verticalAlign = 'middle';
 
-                        const titleParts = session.title.split('\n');
-                        const displayTitle = titleParts[0];
-                        const subInfo = titleParts.slice(1).join(' | ');
-                        const subMarkup = subInfo ? `<div class="agenda-session-sub" style="margin-top:2px;">${subInfo}</div>` : '';
+                        // Parse the title line by line
+                        const rawTitle = session.title || '';
+                        const lines = rawTitle.split('\n')
+                                              .map(l => l.trim())
+                                              .filter(l => l !== '');
 
-                        // 凡是三格寬的行程都拿掉 room name！這裡不包含 roomMarkup
-                        td.innerHTML = `
-                            <div class="agenda-session-box" style="margin-bottom:0; color:var(--primary-color);">${displayTitle}</div>
-                            ${subMarkup}
-                        `;
+                        let venue = (session.room || '').trim();
+                        if (venue.toLowerCase() === 'nan') {
+                            venue = '';
+                        }
+                        let mainTitle = '';
+                        let subtitle = '';
+                        let speaker = '';
+                        let speakerAffiliation = '';
+
+                        // 1. Extract venue from lines if it exists (bracketed or containing Central Conference Hall)
+                        const venueIndex = lines.findIndex(l => l.includes('Central Conference Hall') || (l.startsWith('[') && l.endsWith(']')));
+                        if (venueIndex !== -1) {
+                            if (!venue) {
+                                venue = lines[venueIndex].replace(/[\[\]]/g, '').trim();
+                            }
+                            lines.splice(venueIndex, 1);
+                        }
+
+                        // 2. Main title is the first remaining line
+                        if (lines.length > 0) {
+                            mainTitle = lines[0];
+                        }
+
+                        // 3. Process remaining lines
+                        if (lines.length > 1) {
+                            const remaining = lines.slice(1);
+                            
+                            // Check for quoted sub-theme
+                            const quoteIndex = remaining.findIndex(l => l.startsWith('"') || l.startsWith('“') || l.startsWith('\''));
+                            if (quoteIndex !== -1) {
+                                subtitle = remaining[quoteIndex];
+                                remaining.splice(quoteIndex, 1);
+                            }
+                            
+                            if (remaining.length > 0) {
+                                speaker = remaining[0];
+                            }
+                            if (remaining.length > 1) {
+                                speakerAffiliation = remaining.slice(1).join(' | ');
+                            }
+                        }
+
+                        // Build HTML Content
+                        let htmlContent = `<div class="agenda-session-box" style="margin-bottom:0; color:var(--primary-color); font-weight:700; font-size:0.92rem;">${mainTitle}</div>`;
+
+                        if (subtitle) {
+                            htmlContent += `<div class="agenda-session-sub" style="font-style:italic; font-weight:500; margin-top:3px; color:var(--text-color); font-size:0.8rem;">${subtitle}</div>`;
+                        }
+
+                        if (speaker) {
+                            let speakerText = speaker;
+                            if (speakerAffiliation) {
+                                speakerText += ` (${speakerAffiliation})`;
+                            }
+                            htmlContent += `<div class="agenda-session-sub" style="margin-top:4px; font-weight:600; color:var(--accent-color); font-size:0.78rem;">${speakerText}</div>`;
+                        }
+
+                        if (venue) {
+                            htmlContent += `
+                                <div style="margin-top: 6px; display: flex; justify-content: center; align-items: center;">
+                                    <div style="display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 4px; background: rgba(71, 85, 105, 0.08);">
+                                        <span class="agenda-session-sub" style="font-weight: 600; color:var(--text-muted); font-size: 0.72rem; letter-spacing: 0.2px; line-height: 11px; margin-bottom: 0;">${venue}</span>
+                                    </div>
+                                </div>
+                            `;
+                        }
+
+                        td.innerHTML = htmlContent;
                         row.appendChild(td);
                     } else {
                         const rooms = ['Room A', 'Room B', 'Room C'];
