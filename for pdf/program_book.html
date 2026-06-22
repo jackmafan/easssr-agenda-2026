@@ -943,7 +943,7 @@
                                     offsets.paperOffsets[pid] = currentOffset;
 
                                     const cleanAbstract = paper.abstract ? paper.abstract.replace(/_x000D_\n/g, '\n').replace(/_x000D_/g, '\n') : '';
-                                    if (cleanAbstract.length > 3000) {
+                                    if (cleanAbstract.length > 3750) {
                                         currentOffset += 2;
                                     } else {
                                         currentOffset += 1;
@@ -1268,8 +1268,8 @@
                         // Parse the title line by line
                         const rawTitle = session.title || '';
                         const lines = rawTitle.split('\n')
-                                              .map(l => l.trim())
-                                              .filter(l => l !== '');
+                            .map(l => l.trim())
+                            .filter(l => l !== '');
 
                         let venue = (session.room || '').trim();
                         if (venue.toLowerCase() === 'nan') {
@@ -1297,14 +1297,14 @@
                         // 3. Process remaining lines
                         if (lines.length > 1) {
                             const remaining = lines.slice(1);
-                            
+
                             // Check for quoted sub-theme
                             const quoteIndex = remaining.findIndex(l => l.startsWith('"') || l.startsWith('“') || l.startsWith('\''));
                             if (quoteIndex !== -1) {
                                 subtitle = remaining[quoteIndex];
                                 remaining.splice(quoteIndex, 1);
                             }
-                            
+
                             if (remaining.length > 0) {
                                 speaker = remaining[0];
                             }
@@ -1406,7 +1406,7 @@
                                     const cleanAbstract = paper.abstract ? paper.abstract.replace(/_x000D_\n/g, '\n').replace(/_x000D_/g, '\n') : '';
 
                                     // 如果摘要太長（超過1600個字），則自動切割成兩頁，以避免列印時跑版或截斷
-                                    if (cleanAbstract.length > 3000) {
+                                    if (cleanAbstract.length > 3750) {
                                         let paragraphs = cleanAbstract.split('\n');
                                         if (paragraphs.length === 1) {
                                             const mid = Math.floor(cleanAbstract.length / 2);
