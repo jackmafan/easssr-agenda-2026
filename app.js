@@ -250,11 +250,14 @@ const app = {
         session.papers.forEach(pid => {
             const paper = this.data.papers[pid];
             if (paper && !paper.deprecated) {
+                const coAuthorsSuffix = (paper.co_authors && paper.co_authors.length > 0)
+                    ? ` (with ${paper.co_authors.join(', ')})`
+                    : '';
                 const item = document.createElement('div');
                 item.className = 'paper-item';
                 item.onclick = () => this.showPaper(paper);
                 item.innerHTML = `
-                    <div class="speaker-name">${paper.speaker}</div>
+                    <div class="speaker-name">${paper.speaker}${coAuthorsSuffix}</div>
                     <div class="paper-title">${paper.title}</div>
                 `;
                 list.appendChild(item);
@@ -283,10 +286,15 @@ const app = {
         const roomText = (meta && meta.room && meta.room.trim()) ? ` | ${meta.room}` : '';
         const metaInfo = meta ? `<div class="search-meta" style="margin-bottom: 5px;">${dayDisplay} | ${meta.time}${roomText}</div>` : '';
 
+        const coAuthorsHtml = (paper.co_authors && paper.co_authors.length > 0)
+            ? `<div class="co-authors" style="font-size: 1.1rem; color: var(--text-dim); margin-top: 5px;">with ${paper.co_authors.join(', ')}</div>`
+            : '';
+
         info.innerHTML = `
             ${metaInfo}
-            <div class="speaker-name" style="font-size: 1.5rem;">${paper.speaker}</div>
-            <div class="affiliation">${paper.affiliation}</div>
+            <div class="speaker-name" style="font-size: 1.5rem; margin-bottom: 2px;">${paper.speaker}</div>
+            ${coAuthorsHtml}
+            <div class="affiliation" style="margin-top: 5px;">${paper.affiliation}</div>
             <hr style="border: none; border-top: 1px solid var(--glass-border); margin: 20px 0;">
             <div class="paper-title" style="font-size: 1.5rem; margin-bottom: 5px;">${paper.title}</div>
             <div class="abstract-text">
@@ -325,7 +333,12 @@ const app = {
 
             let searchParts = [];
             if (searchTitle) searchParts.push(paper.title || "");
-            if (searchAuthor) searchParts.push(paper.speaker || "");
+            if (searchAuthor) {
+                searchParts.push(paper.speaker || "");
+                if (paper.co_authors && paper.co_authors.length > 0) {
+                    searchParts.push(paper.co_authors.join(" "));
+                }
+            }
             if (searchAbstract) searchParts.push(paper.abstract || "");
 
             const content = searchParts.join(" ").toLowerCase();
@@ -349,13 +362,17 @@ const app = {
 
                 const speakerHtml = this.highlightText(paper.speaker, keywords);
                 const titleHtml = this.highlightText(paper.title, keywords);
+                const coAuthorsText = (paper.co_authors && paper.co_authors.length > 0)
+                    ? ` (with ${paper.co_authors.join(', ')})`
+                    : '';
+                const coAuthorsHtml = this.highlightText(coAuthorsText, keywords);
 
                 const item = document.createElement('div');
                 item.className = 'paper-item';
                 item.onclick = () => this.showPaper(paper);
                 item.innerHTML = `
                     ${metaInfo}
-                    <div class="speaker-name">${speakerHtml}</div>
+                    <div class="speaker-name">${speakerHtml}${coAuthorsHtml}</div>
                     <div class="paper-title">${titleHtml}</div>
                 `;
                 list.appendChild(item);
