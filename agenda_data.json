@@ -61,7 +61,10 @@
       "affiliation": "Duke Kunshan University",
       "abstract": "Previous research has shown how religious practitioners draw on various practices to develop themselves into particular types of religious subjects, a process that Adam Yuet Chau (2012) calls \"religious subjectification.\" Yet much of this research has focused on Abrahamic religions, often in Western contexts, and it generally does not account for the role the sociopolitical context can play in encouraging or discouraging the development of certain types of religious subjects. Drawing on textual analysis, ethnography, and interviews, this paper examines the religious practices and teachings of a registered lay Buddhist group in China, arguing that they produce a rationalized and privatized \"modern\" Buddhist subject whose religious subjectivity remains confined to the limited forms and locations of religion that the Chinese state permits. Three practices are key for this group: individual study of the master’s teachings, group study, and volunteering within the group. Although group members report that successful religious subjectification significantly reduces their suffering in their everyday lives, these practices do not orient them towards challenging or addressing the structural roots of their suffering. Yet despite encouraging a religious subjectivity that does not challenge the state, the group was abruptly disbanded in 2022, illustrating how the state’s regulatory power focuses primarily on controlling organizational capacity rather than individual religious subjectivity.",
       "co_authors": [
-        "Yixin Gu"
+        {
+          "name": "Yixin Gu",
+          "affiliation": "Duke Kunshan University"
+        }
       ],
       "deprecated": false
     },
@@ -72,8 +75,14 @@
       "affiliation": "Duke Kunshan University",
       "abstract": "With Chinese president Xi Jinping’s calls for the Sinicization of religion in 2015 and 2016 and the revision of the Regulations on Religious Affairs in 2017, observers of Christianity in China raised concerns about increasing political control over religion, particularly \"foreign\" religions such as Protestantism. In this study we draw on Yanfei Sun’s (2026) concept of \"interstitial social space\" to examine the impact these changes have had on a registered Three-Self church in a wealthy city in the Jiangnan region. Using ethnographic fieldwork and a comparison of sermons from 2015-6 and 2024-5, we find support for Sun’s argument that these shifts in religious policy reflect a stricter application of existing religious laws, which results in the closing of the interstitial social space that had previously allowed religions and practices to flourish in a legal gray area. For example, the church no longer provides Sunday school for minors, offers English-language Bible study, or hosts visiting pastors from other parts of China or overseas. On the other hand, while we identify shifts in preaching styles and topics, explicit political messaging is not present in sermons from either period, suggesting that these policy changes have produced greater bureaucratic compliance but not theological transformation.",
       "co_authors": [
-        "Zhenyu Tian",
-        "Haozhe Lou"
+        {
+          "name": "Zhenyu Tian",
+          "affiliation": "Duke Kunshan University"
+        },
+        {
+          "name": "Haozhe Lou",
+          "affiliation": "Duke Kunshan University"
+        }
       ],
       "deprecated": false
     },
@@ -318,7 +327,10 @@
       "affiliation": "Pew research center",
       "abstract": "Buddhism is the only major religion in the world with a falling number of adherents, according to Pew Research Center estimates for 2010 and 2020. This decline is largely driven by changes in East Asia, where many people who were raised Buddhist no longer identify with the religion. In this data essay, we discuss various factors contributing to Buddhism’s decline in Japan and South Korea, drawing on interviews conducted in Tokyo and Seoul in 2024. Our fieldwork offers rich insights into how and why people in Japan and South Korea are drifting away from Buddhism.",
       "co_authors": [
-        "Dalia Fahmy"
+        {
+          "name": "Dalia Fahmy",
+          "affiliation": "Pew Research Center"
+        }
       ],
       "deprecated": false
     },
@@ -464,7 +476,10 @@
       "affiliation": "Kyung Hee University",
       "abstract": "Prior to modernity, cure and care in Western medicine were managed together under the influence of religious institutions. The scientization and secularization of medicine separated care from the medical domain, reducing the religious role and function of care to a spiritual role that complements holistic care. Yet, as aging and the rise of chronic diseases expand the secularization of care, the religious understanding of care also requires renewed reflection. This is because care is both a secular practice and a religious practice. Particularly in a posthuman society where concerns are raised that the development of robots and artificial intelligence replacing human care may threaten holistic religious practice, care is being reconfigured as a practice that traverses the dichotomies of religion-secularism and human-technology. Against this backdrop, this study sheds new light on the profound religious significance inherent in post-human care practices. To this end, it empirically explores the care practices of Korean people with Type 1 diabetes who manage their disease using a DIY Artificial Pancreas System (APS). To understand how these individuals manage their disease with DIY APS, this case analyzes the human-machine relationship through the lens of Science and Technology Studies (STS) and reinterprets the religious significance embedded in these care practices using Bailey's concept of implicit religion.",
       "co_authors": [
-        "Woosung Jang"
+        {
+          "name": "Woosung Jang",
+          "affiliation": "Kyung Hee University"
+        }
       ],
       "deprecated": false
     },
@@ -646,7 +661,10 @@
       "affiliation": "Daejin University",
       "abstract": "This presentation aims to discover how, in Daesoon thought, the coming era of highly advanced technology, AI civilization is perceived as an aspect of earthly paradise. Daesoon thought indicates a theological and philosophical thought of a Korean new religion, Daesoon Jinrihoe. It originated from Kang Jeungsan (1871-1909)’s religious works and teachings, and established by his two successors, Jo Jeongsan (1895~1958) and Park Wudang (1917~1996). In the scripture, Jeon-gyeong, the vision of an earthly paradise is shown in various aspects. One aspect is about the future of advanced high technology. Such view of the civilization can be characterized in three ways. First, the machinery civilization developed from the West is an imitation of heaven and was offered by divine beings to humans. But it resulted in the humans’ arrogance and brought crisis in whole world. Despite the negative result, Kang Jeungsan said the machinery civilization will be kept and be used for humans’ convenience. Second, the earthly paradise is described as a magical world where one would find food and clothing whenever they open a box, everything will be made of gold and people will put on golden shoes, and people can communicate without language barrier. Such magical world can be seen as the result of the aids of divine beings using AI that will bring innovation for human lives. Third, the high-tech paradise come together with humans who are ethically cultivated and be in harmony divine beings. In summary, the earthly paradise of Al civilization seems to be the result of humans’ endeavor to reach personally perfected state and achieve harmony with divine beings to use the magic-like technology for the world of peace and harmony.",
       "co_authors": [
-        "Gyungwon Lee"
+        {
+          "name": "Gyungwon Lee",
+          "affiliation": "Daejin University"
+        }
       ],
       "deprecated": false
     },
@@ -666,7 +684,10 @@
       "affiliation": "Division of International Studies, Korea University",
       "abstract": "This article aims to phenomenologically reveal the gap between the increasingly prevalent tendency in contemporary Korean society to regard companion animals as family members and the anthropocentric perception of companion animals that still remains within Korean Protestantism. By comparing and analyzing public discourse and cultural practices regarding companion animals in contemporary Korea with the understandings and practices observed among Protestant believers and in pastoral settings, the research describes the differing structures of perception between these two spheres. The findings show that, while Korean society increasingly views companion animals as family members and as partners in emotional and ethical relationships, Korean Protestantism still tends to marginalize them within an anthropocentric framework of salvation and pastoral practice. Rather than proposing new theological or pastoral norms, this study focuses on delineating the current position and limitations of Protestant perceptions of companion animals, thereby providing a basic descriptive groundwork for future theological and pastoral discussions.",
       "co_authors": [
-        "Jongman Kim"
+        {
+          "name": "Jongman Kim",
+          "affiliation": "Institute for Religion and Civic Culture, Kyung Hee University"
+        }
       ],
       "deprecated": false
     },
@@ -695,7 +716,10 @@
       "affiliation": "National Taitung University",
       "abstract": "This paper examines how the Catholic Bethlehem Mission Society (SMB) nurtured the formation of a worker-student subjectivity in 1960s Taitung, a sensibility that propelled Taiwan onto the world stage. Specifically, it draws on ethnographic fieldwork and archival analysis to examine the establishment of a religiously oriented educational infrastructure in and around Taitung. This school system comprises of the St Joseph Technical Senior High School (公東高工) which provided vocational high school education to Taitung’s youth, the Eastern Region Vocational Training Centre (東區職訓中心) that ran evening training classes for apprentices working in Taitung’s factories, and P’ei Chih Yüan (培質院), a dormitory for students studying in Taitung city. Structured around the idea of the \"worker-student\" and aligned with the Taiwanese government’s political ideology, this education system aimed to alleviate poverty in Taitung’s communities by teaching youth a skill that helped them secure jobs in a society that was undergoing profound change. At the same time, this ostensibly secular educational structure was animated by religious ideas that emphasized Christian stewardship, leaned on the influence of the Catholic Church, and relied on support from European Christian communities like the Swiss Catholic Labour Movement and the Swiss Apprentices’ Association. Led by SMB missionary, Reverend Jakob Hilber, this globe-spanning infrastructural project transformed the way Taitung’s youth understood the meaning of work, nurtured skilled craftsmen, and produced modern citizens that won international awards for Taiwan. This cultural shift continues to resonate in the region today as graduates of the SMB educational infrastructure continue to see themselves as skilled craftsmen driven by a sense of Christian stewardship and professional dignity. In doing so, this paper aims to illuminate how a religious ethos spilled into the civic realm of education, a process where religious ideas engaged geopolitics, local government policies, and entrenched social norms.",
       "co_authors": [
-        "Sin Wen Lau"
+        {
+          "name": "Sin Wen Lau",
+          "affiliation": "University of Otago"
+        }
       ],
       "deprecated": false
     },
@@ -760,7 +784,10 @@
       "affiliation": "IRCC, Kyung Hee University",
       "abstract": "This study attempts to explain the rapidly increasing interdependence of human and non-human companion bodies in a hyper-connected society as a phenomenon of spiritualization of companion bodies. The purpose of this study is to find out that the phenomenon of \"humanization\" of both companion animals and robots does not simply reflect the prevalence of atheistic values, but also entails a diverse and personalized pursuit of spirituality even in a technology-dominant hyper-connected society. By identifying and comparing the spiritual sympathy and relationship with dogs, cats, care robots, and sex robots in the cross-cultural context, this paper will provide religious-sociological and policy insights into the qualitative changes and properties of future society.",
       "co_authors": [
-        "Dong-Uhn Suh"
+        {
+          "name": "Dong-Uhn Suh",
+          "affiliation": "Kyung Hee University"
+        }
       ],
       "deprecated": false
     },
@@ -825,7 +852,10 @@
       "affiliation": "The University of Hong Kongersity",
       "abstract": "Beginning in late 2023 the notion of \"nine purple li fire trend (jiuzi lihuo yun 九紫离火运)\" started to emerge on various Chinese media platforms. The trend (yun 运) is a temporal unit of twenty years from 2024 to 2043 during which the Chinese world enters the final stage in the cosmic cycle of Three Phases and Nine Trends (sanyuan jiuyun 三元九运). The popular articulation of \"nine purple li fire\" is closely tied to the predicted rising (jueqi 崛起), or awakening (juexing 觉醒), of middle women (zhongnü 中女) in the next twenty years. According to the Book of Changes (Yijing 易经), the eight trigrams can be mapped onto a traditional household in which the li trigram is the \"second daughter\" (zhongnü, same characters as \"middle women\" in Chinese). The category of zhongnü, however, has been widely interpreted as middle-aged women (zhongnian nüxing 中年女性) in their thirties, who became increasingly visible in mediascapes to advocate both spiritual and social empowerment. This proposed study examines the social construct of \"middle women (zhongnü)\", both on social media platforms (WeChat and Red Note) and in spiritual healing spaces (privately owned studios that provide spiritual spaces for healing services in urban China), with which female spiritual practitioners frame their everyday experiences and life projects anchoring a cosmic pattern of rising femininity envisioned by the \"nine purple li fire trend\". The idea of \"middle women rising (zhongnü jueqi)\", as a spiritual message corresponding to the cosmic trend of nine purple li fire, gives rise to a form of popular feminism on digital platforms and becomes internalized by female spiritual practitioners who identify with the trend (Banet-Weiser et al., 9). Such a spiritually enlightened feminism shares similar contents with what Wu and Dong call the \"non-cooperative strand\" of \"made-in-China feminism\" (481-5); indeed, \"middle women rising\" also underlies the liberation of female sexuality from marriage and family, and as such \"heighten(s) meritocracy and women’s earned spots in the class hierarchy\" (483). However, it does mark a unique realm of discourses and sensibilities that views women’s rising, or empowerment, as a correspondence (ganying 感应) to the cosmic pattern, rather than a form of socio-political activism for gender equality. This aspect of feminist discourses and experiences inspired by the so-called ancient Chinese wisdom brings different understandings of what feminism means in the Chinese context and provokes new dynamics between Chinese men and women during a time of gynocentrism envisioned by the cosmic trend. By bringing in the voices of those who subscribe to this gendered spiritual empowerment, this research adds to the ambivalences in feminist discussion both within and beyond China (Banet-Weiser et al., 15-19). Moreover, it also calls for more postcolonial sensitivity in an intersectional approach to the study of women in non-Western contexts in which the interplay of gender, age and spirituality inspire and sustain the narratives of empowerment.",
       "co_authors": [
-        "Yang Wang"
+        {
+          "name": "Yang Wang",
+          "affiliation": "The University of Hong Kong"
+        }
       ],
       "deprecated": false
     },
@@ -854,7 +884,10 @@
       "affiliation": "Kyung Hee University",
       "abstract": "Recently, an increasing number of quantum scientists have proposed the hypothesis of 'quantum consciousness', suggesting that the mechanisms of the quantum phenomena operate within the realm of human consciousness. A theory of quantum consciousness that actively embraces the insightful implications of foundational concepts such as quantum entanglement, superposition, (de)coherence, wave function collapse, and non-locality, deeply resonates with the profound significance of holistic spiritual and religious traditions, which transcend the traditional (modernist) dualism of mind and body, affirming the interconnectedness of consciousness and matter, the individual and the cosmos. This paper will examine the \"Orch-OR Theory\", a quantum consciousness theory that resonates with this insight. This endeavour will serve as an introductory attempt to explore the possibility of new intellectual discourses, such as the concept of \"quantum spirituality\", by triggering a kind of reflexive shift in sociological approaches to spiritual and religious experiences.",
       "co_authors": [
-        "Hyun Woo Kim"
+        {
+          "name": "Hyun Woo Kim",
+          "affiliation": "Chungbuk National University"
+        }
       ],
       "deprecated": false
     },
@@ -948,7 +981,10 @@
       "affiliation": "CESNUR (Center for Studies on New Religions)",
       "abstract": "This paper analyzes contemporary threats to religious liberty by distinguishing four categories of actors: secularist states and their bureaucratic agencies; terrorist organizations invoking ideological or religious \"purity\"; majoritarian religious institutions that politicize faith and marginalize dissent; and anti-cult movements that employ the term \"cult\" as an instrument of delegitimization. Particular attention is given to the latter and to the sociopolitical function of the label \"cult,\" a category devoid of scientific validity and largely abandoned within the academic study of religion. The paper further examines democratic states that formally endorse religious neutrality in the name of tolerance yet frequently diverge from this normative commitment in practice. Focusing on recent developments in the Republic of China (Taiwan), Japan, and South Korea, it argues that the convergence of political discourse, media framing, and anti-cult activism can generate structural pressures on minority religious communities, thereby raising substantive constitutional concerns regarding the effective protection of religious liberty.",
       "co_authors": [
-        "Marco Respinti"
+        {
+          "name": "Marco Respinti",
+          "affiliation": "The Journal of CESNUR, Milan, Italy"
+        }
       ],
       "deprecated": false
     },
@@ -977,7 +1013,10 @@
       "affiliation": "National Taipei University of Nursing and Health Sciences",
       "abstract": "Taiwan’s Muslim population remains small and institutionally marginalized, and the limited availability of formal Islamic educational institutions has long posed challenges for religious transmission and community sustainability. With only one developing Islamic school and scarce state recognition or structural support, Islamic education in Taiwan largely depends on community-based initiatives and the dedication of local educators. Within this fragile educational ecology, teachers often assume responsibilities that extend far beyond classroom instruction. This study investigates the extent and nature of teachers’ involvement in supporting not only religious learning but also the mental and emotional well-being of Muslim children in Taiwan. Employing a qualitative research design that combines literature review, field observation, and contextual analysis, this study examines how Islamic teachers function as key actors within a minority religious setting characterized by limited institutional resources. Rather than serving solely as subject instructors, teachers frequently act as mentors, counsellors, and psychosocial supporters. They provide spiritual and emotional guidance, assist students in coping with stress and identity-related challenges, and cultivate resilience through religious practices. For example, daily prayers, Qur’anic recitation, and moral instruction are integrated into pedagogical routines to foster inner calm, emotional regulation, and ethical self-discipline. The findings identify four primary dimensions of teacher involvement. First, teachers offer spiritual and emotional counselling, guiding students through personal and developmental difficulties. Second, they link faith practices with mental well-being, framing religious discipline as a source of psychological stability. Third, through role modelling (known in Islamic pedagogy as uswatun hasanah), teachers embody virtues such as patience, humility, and compassion, thereby shaping students’ emotional and moral dispositions. Fourth, teachers actively collaborate with parents and caregivers to monitor behavioral changes and to create supportive environments beyond school settings. By highlighting these expanded roles, this study argues that Islamic educators in Taiwan operate as crucial mediators between religion, family, and community under conditions of institutional scarcity. Their work demonstrates how minority religious education adapts through informal care networks and relational forms of support. Conceptually, the paper contributes to discussions on religion and education by showing that faith-based schooling in marginalized contexts cannot be understood solely in curricular terms but must also be analyzed as a site of psychosocial care and community resilience. Strengthening teacher capacity and building sustainable Islamic educational infrastructures are therefore essential not only for educational quality but also for the overall well-being of Muslim children in Taiwan.",
       "co_authors": [
-        "Syuan-yuan Chiou"
+        {
+          "name": "Syuan-yuan Chiou",
+          "affiliation": "National Chengchi University"
+        }
       ],
       "deprecated": false
     },
@@ -1105,7 +1144,10 @@
       "affiliation": "National Tsing Hua University",
       "abstract": "On September 23, 2025, Super Typhoon Ragasa caused a catastrophic barrier lake breach in Hualien, Taiwan. Soon after, waves of unorganized volunteers began arriving spontaneously by train at the disaster's epicenter. By early November, approximately 450,000 volunteer visits had been made. Aptly called \"shovel heroes,\" these individuals performed hard physical labor alongside the military and established religious groups like the Buddhist Tzu Chi Foundation. Crucially, many mobilized in response to calls for help on Threads, a social media platform that has recently become a hub for Gen Z in Taiwan. This raises our primary research question: How can we explain this sudden mass of unorganized \"shovel heroes\" mobilizing for physical labor? Initiated by Yu-ting Lin’s foundational digital ethnography of Threads during the catastrophe's onset, this paper analyzes the shovel heroes as a moment of collective \"ethicalization\" (Lambek 2010). We synthesize Lin’s real-time connective ethnography (Hine 2015) with Huang’s long-term research on religion and charity. Engaging with religion is essential, as ground zero was heavily populated by institutionalized groups like Tzu Chi, while Threads was simultaneously inundated with posts reflecting younger users' novel impressions of Tzu Chi's presence. This mobilization of digital natives thus intersects notably with Taiwan's \"religious renaissance\" (Madisen 2007) built by older generations. This massive response of altruistic physical labor challenges standard models of social media mobilization, which typically focus on digital protest and advocacy (e.g., Bonilla and Rosa 2015). To unpack this, we bridge digital activism with the anthropology of ethics. We utilize Webb Keane's concept of affordance to analyze how the platform's specific architecture enables distinct moral actions, alongside Michael Lambek's conditions of being present to explain the drive for on-the-ground physical labor. Ultimately, we propose that this phenomenon marks a distinct generational transition: a shift from an older generation of organized, institutionalized \"good persons\" to a younger generation defined by media-savvy, individualized, yet deeply impactful unorganized ethical actions. The shovel heroes illustrate a novel combination of ordinary and transcendental ethics in the digital age.",
       "co_authors": [
-        "C. Julia Huang"
+        {
+          "name": "C. Julia Huang",
+          "affiliation": "National Tsing Hua University"
+        }
       ],
       "deprecated": false
     },

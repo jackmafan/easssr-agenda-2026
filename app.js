@@ -7,8 +7,9 @@ const app = {
 
     formatAuthors(speaker, coAuthors) {
         if (!coAuthors || coAuthors.length === 0) return speaker || "";
-        if (coAuthors.length === 1) return `${speaker} and ${coAuthors[0]}`;
-        return `${speaker}, ${coAuthors.slice(0, -1).join(', ')}, and ${coAuthors[coAuthors.length - 1]}`;
+        const names = coAuthors.map(ca => typeof ca === 'object' ? ca.name : ca);
+        if (names.length === 1) return `${speaker} and ${names[0]}`;
+        return `${speaker}, ${names.slice(0, -1).join(', ')}, and ${names[names.length - 1]}`;
     },
 
     async init() {
@@ -256,12 +257,25 @@ const app = {
         session.papers.forEach(pid => {
             const paper = this.data.papers[pid];
             if (paper && !paper.deprecated) {
-                const authorsText = this.formatAuthors(paper.speaker, paper.co_authors);
+                let authorsHtml = `<div class="speaker-name" style="font-weight: 600; margin-bottom: 2px;">` +
+                    `${paper.speaker}` +
+                    `${paper.affiliation ? ` <span style="font-weight: normal; color: var(--text-dim); font-size: 0.85rem; margin-left: 6px;">(${paper.affiliation})</span>` : ''}` +
+                    `</div>`;
+                if (paper.co_authors && paper.co_authors.length > 0) {
+                    paper.co_authors.forEach(ca => {
+                        const name = typeof ca === 'object' ? ca.name : ca;
+                        const aff = typeof ca === 'object' ? ca.affiliation : '';
+                        authorsHtml += `<div class="speaker-name" style="font-weight: 600; margin-top: 2px; margin-bottom: 2px;">` +
+                            `${name}` +
+                            `${aff ? ` <span style="font-weight: normal; color: var(--text-dim); font-size: 0.85rem; margin-left: 6px;">(${aff})</span>` : ''}` +
+                            `</div>`;
+                    });
+                }
                 const item = document.createElement('div');
                 item.className = 'paper-item';
                 item.onclick = () => this.showPaper(paper);
                 item.innerHTML = `
-                    <div class="speaker-name">${authorsText}</div>
+                    <div class="paper-authors-list" style="margin-bottom: 6px;">${authorsHtml}</div>
                     <div class="paper-title">${paper.title}</div>
                 `;
                 list.appendChild(item);
@@ -290,12 +304,26 @@ const app = {
         const roomText = (meta && meta.room && meta.room.trim()) ? ` | ${meta.room}` : '';
         const metaInfo = meta ? `<div class="search-meta" style="margin-bottom: 5px;">${dayDisplay} | ${meta.time}${roomText}</div>` : '';
 
-        const authorsText = this.formatAuthors(paper.speaker, paper.co_authors);
+        let authorsHtml = `<div class="author-row" style="font-size: 1.25rem; font-weight: 600; color: var(--text-color); margin-bottom: 6px;">` +
+            `<span class="author-name">${paper.speaker}</span>` +
+            `${paper.affiliation ? ` <span class="author-affiliation" style="font-size: 1rem; font-weight: normal; font-style: italic; color: var(--text-dim); margin-left: 8px;">(${paper.affiliation})</span>` : ''}` +
+            `</div>`;
+        if (paper.co_authors && paper.co_authors.length > 0) {
+            paper.co_authors.forEach(ca => {
+                const name = typeof ca === 'object' ? ca.name : ca;
+                const aff = typeof ca === 'object' ? ca.affiliation : '';
+                authorsHtml += `<div class="author-row" style="font-size: 1.25rem; font-weight: 600; color: var(--text-color); margin-bottom: 6px;">` +
+                    `<span class="author-name">${name}</span>` +
+                    `${aff ? ` <span class="author-affiliation" style="font-size: 1rem; font-weight: normal; font-style: italic; color: var(--text-dim); margin-left: 8px;">(${aff})</span>` : ''}` +
+                    `</div>`;
+            });
+        }
 
         info.innerHTML = `
             ${metaInfo}
-            <div class="speaker-name" style="font-size: 1.5rem; margin-bottom: 2px;">${authorsText}</div>
-            <div class="affiliation" style="margin-top: 5px;">${paper.affiliation}</div>
+            <div class="authors-container" style="margin-bottom: 15px;">
+                ${authorsHtml}
+            </div>
             <hr style="border: none; border-top: 1px solid var(--glass-border); margin: 20px 0;">
             <div class="paper-title" style="font-size: 1.5rem; margin-bottom: 5px;">${paper.title}</div>
             <div class="abstract-text">
@@ -337,7 +365,8 @@ const app = {
             if (searchAuthor) {
                 searchParts.push(paper.speaker || "");
                 if (paper.co_authors && paper.co_authors.length > 0) {
-                    searchParts.push(paper.co_authors.join(" "));
+                    const names = paper.co_authors.map(ca => typeof ca === 'object' ? ca.name : ca);
+                    searchParts.push(names.join(" "));
                 }
             }
             if (searchAbstract) searchParts.push(paper.abstract || "");
@@ -361,8 +390,20 @@ const app = {
                 const roomText = (meta && meta.room && meta.room.trim()) ? ` | ${meta.room}` : '';
                 const metaInfo = meta ? `<div class="search-meta">${dayDisplay} | ${meta.time}${roomText}</div>` : '';
 
-                const authorsText = this.formatAuthors(paper.speaker, paper.co_authors);
-                const authorsHtml = this.highlightText(authorsText, keywords);
+                let searchAuthorsHtml = `<div class="speaker-name" style="font-weight: 600; margin-bottom: 2px;">` +
+                    `${this.highlightText(paper.speaker, keywords)}` +
+                    `${paper.affiliation ? ` <span style="font-weight: normal; color: var(--text-dim); font-size: 0.85rem; margin-left: 6px;">(${this.highlightText(paper.affiliation, keywords)})</span>` : ''}` +
+                    `</div>`;
+                if (paper.co_authors && paper.co_authors.length > 0) {
+                    paper.co_authors.forEach(ca => {
+                        const name = typeof ca === 'object' ? ca.name : ca;
+                        const aff = typeof ca === 'object' ? ca.affiliation : '';
+                        searchAuthorsHtml += `<div class="speaker-name" style="font-weight: 600; margin-top: 2px; margin-bottom: 2px;">` +
+                            `${this.highlightText(name, keywords)}` +
+                            `${aff ? ` <span style="font-weight: normal; color: var(--text-dim); font-size: 0.85rem; margin-left: 6px;">(${this.highlightText(aff, keywords)})</span>` : ''}` +
+                            `</div>`;
+                    });
+                }
                 const titleHtml = this.highlightText(paper.title, keywords);
 
                 const item = document.createElement('div');
@@ -370,7 +411,7 @@ const app = {
                 item.onclick = () => this.showPaper(paper);
                 item.innerHTML = `
                     ${metaInfo}
-                    <div class="speaker-name">${authorsHtml}</div>
+                    <div class="paper-authors-list" style="margin-bottom: 6px;">${searchAuthorsHtml}</div>
                     <div class="paper-title">${titleHtml}</div>
                 `;
                 list.appendChild(item);
