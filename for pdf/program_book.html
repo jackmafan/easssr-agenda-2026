@@ -400,11 +400,6 @@
             color: var(--accent-color);
         }
 
-        .abstract-coauthors {
-            font-size: 0.95rem;
-            color: var(--text-color);
-        }
-
         .abstract-affiliation {
             font-style: italic;
             font-size: 0.9rem;
@@ -820,6 +815,12 @@
        3. 動態渲染與互動邏輯 (JavaScript)
        ========================================================================== */ -->
     <script>
+        function formatAuthors(speaker, coAuthors) {
+            if (!coAuthors || coAuthors.length === 0) return speaker || "";
+            if (coAuthors.length === 1) return `${speaker} and ${coAuthors[0]}`;
+            return `${speaker}, ${coAuthors.slice(0, -1).join(', ')}, and ${coAuthors[coAuthors.length - 1]}`;
+        }
+
         let agendaData = null;
 
         // 初始化載入
@@ -1086,14 +1087,12 @@
                                 currentPaperList = standaloneList;
                             }
 
-                            const coAuthorsSuffix = (paper.co_authors && paper.co_authors.length > 0)
-                                ? ` (with ${paper.co_authors.join(', ')})`
-                                : '';
+                            const authorsText = formatAuthors(paper.speaker, paper.co_authors);
                             const paperItem = document.createElement('div');
                             paperItem.className = 'toc-paper-item';
                             paperItem.innerHTML = `
                                 <div class="toc-paper-title">${paper.title}</div>
-                                <div class="toc-paper-author">${paper.speaker}${coAuthorsSuffix}</div>
+                                <div class="toc-paper-author">${authorsText}</div>
                             `;
                             currentPaperList.appendChild(paperItem);
                         }
@@ -1412,9 +1411,7 @@
                                 const paper = agendaData.papers[pid];
                                 if (paper && !paper.deprecated) {
                                     const cleanAbstract = paper.abstract ? paper.abstract.replace(/_x000D_\n/g, '\n').replace(/_x000D_/g, '\n') : '';
-                                    const coAuthorsSpan = (paper.co_authors && paper.co_authors.length > 0)
-                                        ? `<span class="abstract-coauthors" style="font-size: 0.95rem; color: var(--text-color); margin-left: 8px;">with ${paper.co_authors.join(', ')}</span>`
-                                        : '';
+                                    const authorsText = formatAuthors(paper.speaker, paper.co_authors);
 
                                     // 如果摘要太長（超過1600個字），則自動切割成兩頁，以避免列印時跑版或截斷
                                     if (cleanAbstract.length > 3750) {
@@ -1459,8 +1456,7 @@
                                         item1.innerHTML = `
                                             <div class="abstract-paper-title" style="font-size: 1.35rem; margin-top: 15mm; margin-bottom: 12px; line-height: 1.4; color: var(--primary-color); font-weight: 700;">${paper.title}</div>
                                             <div class="abstract-author-info" style="margin-bottom: 25px; display: flex; align-items: baseline; gap: 8px;">
-                                                <span class="abstract-speaker" style="font-size: 1.1rem; font-weight: 700; color: var(--accent-color);">${paper.speaker}</span>
-                                                ${coAuthorsSpan}
+                                                <span class="abstract-speaker" style="font-size: 1.1rem; font-weight: 700; color: var(--accent-color);">${authorsText}</span>
                                                 <span class="abstract-affiliation" style="font-size: 0.9rem; font-style: italic; color: var(--text-muted);">${paper.affiliation || ''}</span>
                                             </div>
                                             <div class="abstract-content" style="font-size: 0.95rem; line-height: 1.65; text-align: justify; color: var(--text-color); font-weight: 400; letter-spacing: 0.2px;">${textPart1}</div>
@@ -1482,9 +1478,6 @@
                                         currentPageNum++;
                                     } else {
                                         // 普通長度的論文：單頁完整呈現
-                                        const coAuthorsSpan = (paper.co_authors && paper.co_authors.length > 0)
-                                            ? `<span class="abstract-coauthors" style="font-size: 0.95rem; color: var(--text-color);">with ${paper.co_authors.join(', ')}</span>`
-                                            : '';
                                         const pageEl = createNewAbstractPage(currentPageNum, session, day, dateLabel, slot.time);
                                         const pageContentArea = pageEl.querySelector('.abstracts-page-content');
                                         const item = document.createElement('div');
@@ -1492,8 +1485,7 @@
                                         item.innerHTML = `
                                             <div class="abstract-paper-title" style="font-size: 1.35rem; margin-top: 15mm; margin-bottom: 12px; line-height: 1.4; color: var(--primary-color); font-weight: 700;">${paper.title}</div>
                                             <div class="abstract-author-info" style="margin-bottom: 25px; display: flex; align-items: baseline; gap: 8px;">
-                                                <span class="abstract-speaker" style="font-size: 1.1rem; font-weight: 700; color: var(--accent-color);">${paper.speaker}</span>
-                                                ${coAuthorsSpan}
+                                                <span class="abstract-speaker" style="font-size: 1.1rem; font-weight: 700; color: var(--accent-color);">${authorsText}</span>
                                                 <span class="abstract-affiliation" style="font-size: 0.9rem; font-style: italic; color: var(--text-muted);">${paper.affiliation || ''}</span>
                                             </div>
                                             <div class="abstract-content" style="font-size: 0.95rem; line-height: 1.65; text-align: justify; color: var(--text-color); font-weight: 400; letter-spacing: 0.2px;">${cleanAbstract}</div>

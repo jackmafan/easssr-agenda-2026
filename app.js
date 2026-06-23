@@ -5,6 +5,12 @@ const app = {
     paperToSession: {},
     isInitialLoad: true,
 
+    formatAuthors(speaker, coAuthors) {
+        if (!coAuthors || coAuthors.length === 0) return speaker || "";
+        if (coAuthors.length === 1) return `${speaker} and ${coAuthors[0]}`;
+        return `${speaker}, ${coAuthors.slice(0, -1).join(', ')}, and ${coAuthors[coAuthors.length - 1]}`;
+    },
+
     async init() {
         try {
             const response = await fetch('agenda_data.json');
@@ -250,14 +256,12 @@ const app = {
         session.papers.forEach(pid => {
             const paper = this.data.papers[pid];
             if (paper && !paper.deprecated) {
-                const coAuthorsSuffix = (paper.co_authors && paper.co_authors.length > 0)
-                    ? ` (with ${paper.co_authors.join(', ')})`
-                    : '';
+                const authorsText = this.formatAuthors(paper.speaker, paper.co_authors);
                 const item = document.createElement('div');
                 item.className = 'paper-item';
                 item.onclick = () => this.showPaper(paper);
                 item.innerHTML = `
-                    <div class="speaker-name">${paper.speaker}${coAuthorsSuffix}</div>
+                    <div class="speaker-name">${authorsText}</div>
                     <div class="paper-title">${paper.title}</div>
                 `;
                 list.appendChild(item);
@@ -286,14 +290,11 @@ const app = {
         const roomText = (meta && meta.room && meta.room.trim()) ? ` | ${meta.room}` : '';
         const metaInfo = meta ? `<div class="search-meta" style="margin-bottom: 5px;">${dayDisplay} | ${meta.time}${roomText}</div>` : '';
 
-        const coAuthorsHtml = (paper.co_authors && paper.co_authors.length > 0)
-            ? `<div class="co-authors" style="font-size: 1.1rem; color: var(--text-dim); margin-top: 5px;">with ${paper.co_authors.join(', ')}</div>`
-            : '';
+        const authorsText = this.formatAuthors(paper.speaker, paper.co_authors);
 
         info.innerHTML = `
             ${metaInfo}
-            <div class="speaker-name" style="font-size: 1.5rem; margin-bottom: 2px;">${paper.speaker}</div>
-            ${coAuthorsHtml}
+            <div class="speaker-name" style="font-size: 1.5rem; margin-bottom: 2px;">${authorsText}</div>
             <div class="affiliation" style="margin-top: 5px;">${paper.affiliation}</div>
             <hr style="border: none; border-top: 1px solid var(--glass-border); margin: 20px 0;">
             <div class="paper-title" style="font-size: 1.5rem; margin-bottom: 5px;">${paper.title}</div>
@@ -360,19 +361,16 @@ const app = {
                 const roomText = (meta && meta.room && meta.room.trim()) ? ` | ${meta.room}` : '';
                 const metaInfo = meta ? `<div class="search-meta">${dayDisplay} | ${meta.time}${roomText}</div>` : '';
 
-                const speakerHtml = this.highlightText(paper.speaker, keywords);
+                const authorsText = this.formatAuthors(paper.speaker, paper.co_authors);
+                const authorsHtml = this.highlightText(authorsText, keywords);
                 const titleHtml = this.highlightText(paper.title, keywords);
-                const coAuthorsText = (paper.co_authors && paper.co_authors.length > 0)
-                    ? ` (with ${paper.co_authors.join(', ')})`
-                    : '';
-                const coAuthorsHtml = this.highlightText(coAuthorsText, keywords);
 
                 const item = document.createElement('div');
                 item.className = 'paper-item';
                 item.onclick = () => this.showPaper(paper);
                 item.innerHTML = `
                     ${metaInfo}
-                    <div class="speaker-name">${speakerHtml}${coAuthorsHtml}</div>
+                    <div class="speaker-name">${authorsHtml}</div>
                     <div class="paper-title">${titleHtml}</div>
                 `;
                 list.appendChild(item);
