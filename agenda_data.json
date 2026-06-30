@@ -386,7 +386,7 @@
       "affiliation": "Hong Kong Shue Yan University",
       "abstract": "This paper examines how digital entertainment in China gives rise to ritualized emotional practices and affective convergence through the case of Black Myth: Wukong, a highly anticipated large-scale Chinese video game. It should be noted that the \"Bandwagon Pilgrimage\" in this study evolves from traditional religious pilgrimage in Buddhism, which originally refers to the devout practice of believers traveling to Buddhist sacred sites to pay homage and seek spiritual sustenance; in the context of this research, it is extended to the collective imitative behavior formed by users around the game on social media. Notably, the game’s production team drew direct inspiration from iconic Buddhist architectural sites across China—such as the Dazu Rock Carvings, the Leshan Giant Buddha, and the ancient Xiaoxitian (Little Western Paradise) temple complex—infusing its visual and narrative world with profound religious and cultural symbolism. Drawing on user-generated content (UGC) from Xiaohongshu, this paper analyzes how fragmented discourses, visual memes, and narrative projections coalesce into a platform-mediated \"bandwagon pilgrimage.\" Employing digital ethnography, visual analysis, and qualitative content analysis, this research investigates how users collectively construct anticipatory rituals, ethno-religious imaginaries, and identity rehearsals both prior to and following the game’s release. Findings indicate that emotional investment in Black Myth: Wukong is less centered on product consumption and more focused on affective alignment, symbolic participation, and mediated mimicry enabled by platform affordances. The Xiaohongshu ecosystem—through its algorithmic visibility, aesthetic norms, and emotionally charged semiotic templates—facilitates the transformation of entertainment anticipation into a quasi-ritual practice. By conceptualizing this process as a \"bandwagon pilgrimage,\" this research contributes to the understanding of how emotionally charged, platform-driven fan discourse can simulate collective ritual, generate symbolic cohesion, and sustain shared affective orientation over time. This study further advances the development of digital ritual studies by demonstrating that bandwagon pilgrimage emerges not as a fleeting trend, but as a structured, ongoing form of mediated participation embedded in China’s entertainment and platform ecologies.",
       "co_authors": [],
-      "deprecated": false
+      "deprecated": true
     },
     "49": {
       "id": "49",
@@ -458,7 +458,7 @@
       "affiliation": "Rikkyo University",
       "abstract": "This presentation explores the wide range of cultural products used in anti-Yiguandao campaigns in the early years of the People’s Republic of China (PRC). Yiguandao 一貫道, a new religious movement born of China’s rich sectarian tradition, was established as an autonomous religious group in late nineteenth-century Shandong province and became a nationwide movement during the 1930s and 40s. Banned already in 1945 by the nationalist KMT government for its purported collaboration with the Japanese army during the Second Sino-Japanese War (1937-1945), Yiguandao was also banned by the Chinese Communist Party (CCP) along with many other sectarian groups in 1949. It subsequently evolved into the primary target of the first mass campaigns in the early PRC, where it was relentlessly suppressed. While earlier researchers, such as Hung Chang-tai 洪長泰, Mitani Takeshi 三谷孝, Qin Baoqi 秦寶琦, and others, have focused on the CCP’s mass campaigns and political activities aimed at eradicating Yiguandao, this paper seeks to analyze the diverse propagandistic tools more closely. These include stage plays, novels, nonfiction education books, traditional operas (such as yanggeju 秧歌劇), comic dialogs (xiangsheng 相聲), films, and Chinese comics (lianhuanhua 連環畫). These diverse cultural products were deliberately used to address a wide range of audiences beyond the narrow circle of literate elites and urban populations. The paper argues that these works not only express politically motivated criticisms aimed at vilifying Yiguandao as the people’s enemy, but they also contain a wealth of factually accurate information about Yiguandao symbols, beliefs, and practices. These works thus constitute what might be called a politicized attempt at antireligious literacy, i.e., to enable people to understand Yiguandao and its perceived harmfulness. By analyzing their contents, the paper also addresses the potential risks and benefits of using these works as primary sources for studying the history of Yiguandao in the late Republican (1912-1949) and early PRC eras.",
       "co_authors": [],
-      "deprecated": false
+      "deprecated": true
     },
     "57": {
       "id": "57",
@@ -656,16 +656,11 @@
     },
     "79": {
       "id": "79",
-      "title": "Perception of AI Civilization in Daesoon Thought",
-      "speaker": "Soyeon Joo",
+      "title": "Human Identity in the Age of AI: Insights from Daesoon Thought's Injon and Sangsaeng",
+      "speaker": "Gyungwon Lee",
       "affiliation": "Daejin University",
       "abstract": "This presentation aims to discover how, in Daesoon thought, the coming era of highly advanced technology, AI civilization is perceived as an aspect of earthly paradise. Daesoon thought indicates a theological and philosophical thought of a Korean new religion, Daesoon Jinrihoe. It originated from Kang Jeungsan (1871-1909)’s religious works and teachings, and established by his two successors, Jo Jeongsan (1895~1958) and Park Wudang (1917~1996). In the scripture, Jeon-gyeong, the vision of an earthly paradise is shown in various aspects. One aspect is about the future of advanced high technology. Such view of the civilization can be characterized in three ways. First, the machinery civilization developed from the West is an imitation of heaven and was offered by divine beings to humans. But it resulted in the humans’ arrogance and brought crisis in whole world. Despite the negative result, Kang Jeungsan said the machinery civilization will be kept and be used for humans’ convenience. Second, the earthly paradise is described as a magical world where one would find food and clothing whenever they open a box, everything will be made of gold and people will put on golden shoes, and people can communicate without language barrier. Such magical world can be seen as the result of the aids of divine beings using AI that will bring innovation for human lives. Third, the high-tech paradise come together with humans who are ethically cultivated and be in harmony divine beings. In summary, the earthly paradise of Al civilization seems to be the result of humans’ endeavor to reach personally perfected state and achieve harmony with divine beings to use the magic-like technology for the world of peace and harmony.",
-      "co_authors": [
-        {
-          "name": "Gyungwon Lee",
-          "affiliation": "Daejin University"
-        }
-      ],
+      "co_authors": [],
       "deprecated": false
     },
     "80": {
@@ -977,15 +972,10 @@
     "112": {
       "id": "112",
       "title": "\"Cult\" Controversies in Asia: Democratic Neutrality, Delegitimization and the Erosion of Religious Liberty",
-      "speaker": "Massimo Introvigne",
-      "affiliation": "CESNUR (Center for Studies on New Religions)",
+      "speaker": "Marco Respinti",
+      "affiliation": "The Journal of CESNUR, Milan, Italy",
       "abstract": "This paper analyzes contemporary threats to religious liberty by distinguishing four categories of actors: secularist states and their bureaucratic agencies; terrorist organizations invoking ideological or religious \"purity\"; majoritarian religious institutions that politicize faith and marginalize dissent; and anti-cult movements that employ the term \"cult\" as an instrument of delegitimization. Particular attention is given to the latter and to the sociopolitical function of the label \"cult,\" a category devoid of scientific validity and largely abandoned within the academic study of religion. The paper further examines democratic states that formally endorse religious neutrality in the name of tolerance yet frequently diverge from this normative commitment in practice. Focusing on recent developments in the Republic of China (Taiwan), Japan, and South Korea, it argues that the convergence of political discourse, media framing, and anti-cult activism can generate structural pressures on minority religious communities, thereby raising substantive constitutional concerns regarding the effective protection of religious liberty.",
-      "co_authors": [
-        {
-          "name": "Marco Respinti",
-          "affiliation": "The Journal of CESNUR, Milan, Italy"
-        }
-      ],
+      "co_authors": [],
       "deprecated": false
     },
     "113": {
@@ -1250,7 +1240,7 @@
             },
             {
               "room": "Room C",
-              "title": "Religious Liberty Issues in East Asia\nModerator: Introvigne, Massimo",
+              "title": "Religious Liberty Issues in East Asia\nModerator: Respinti, Marco",
               "papers": [
                 "112",
                 "29",
